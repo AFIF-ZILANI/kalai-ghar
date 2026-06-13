@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Heritage terracotta palette */
+  --color-terracotta-50:  #fdf4f0;
+  --color-terracotta-100: #fbe5da;
+  --color-terracotta-200: #f6c9b2;
+  --color-terracotta-300: #f0a580;
+  --color-terracotta-400: #e87f50;
+  --color-terracotta-500: #d95f2a;
+  --color-terracotta-600: #b84520;
+  --color-terracotta-700: #8f3219;
+  --color-terracotta-800: #6b2414;
+  --color-terracotta-900: #4e1a0f;
+
+  --color-saffron-400: #f5b942;
+  --color-saffron-500: #e8a020;
+  --color-saffron-600: #c47f10;
+
+  --color-earth-50:  #f9f5ef;
+  --color-earth-100: #ede4d1;
+  --color-earth-200: #d6c4a0;
+  --color-earth-800: #3d2e1a;
+  --color-earth-900: #261c0d;
+
+  --color-cream: #fdf8f2;
+  --color-ink:   #1a1007;
+
+  /* Semantic tokens */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-ink);
+
+  /* Fonts */
+  --font-sans:   var(--font-inter);
+  --font-bengali: var(--font-hind-siliguri);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Bengali locale uses Bengali font */
+:lang(bn) {
+  font-family: var(--font-bengali), var(--font-sans), system-ui, sans-serif;
+}
+
+/* Ensure Bengali numerals look correct */
+.bn-numerals {
+  font-feature-settings: "lnum" 0;
 }
