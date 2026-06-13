@@ -11,86 +11,86 @@ import MobileBottomBar from "@/components/layout/MobileBottomBar";
 import "../globals.css";
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
+    subsets: ["latin"],
+    variable: "--font-inter",
+    display: "swap",
 });
 
 const hindSiliguri = Hind_Siliguri({
-  subsets: ["bengali", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-hind-siliguri",
-  display: "swap",
+    subsets: ["bengali", "latin"],
+    weight: ["300", "400", "500", "600", "700"],
+    variable: "--font-hind-siliguri",
+    display: "swap",
 });
 
 type Props = {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata" });
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "metadata" });
 
-  const alternates = {
-    canonical: `${siteConfig.siteUrl}/${locale}`,
-    languages: {
-      bn: `${siteConfig.siteUrl}/bn`,
-      en: `${siteConfig.siteUrl}/en`,
-    },
-  };
+    const alternates = {
+        canonical: `${siteConfig.siteUrl}/${locale}`,
+        languages: {
+            bn: `${siteConfig.siteUrl}/bn`,
+            en: `${siteConfig.siteUrl}/en`,
+        },
+    };
 
-  return {
-    metadataBase: new URL(siteConfig.siteUrl),
-    title: t("title"),
-    description: t("description"),
-    alternates,
-    openGraph: {
-      title: t("ogTitle"),
-      description: t("ogDescription"),
-      url: `${siteConfig.siteUrl}/${locale}`,
-      siteName: siteConfig.name,
-      images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
-      locale: locale === "bn" ? "bn_BD" : "en_US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("ogTitle"),
-      description: t("ogDescription"),
-      images: [siteConfig.ogImage],
-    },
-  };
+    return {
+        metadataBase: new URL(siteConfig.siteUrl),
+        title: t("title"),
+        description: t("description"),
+        alternates,
+        openGraph: {
+            title: t("ogTitle"),
+            description: t("ogDescription"),
+            url: `${siteConfig.siteUrl}/${locale}`,
+            siteName: siteConfig.name,
+            images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+            locale: locale === "bn" ? "bn_BD" : "en_US",
+            type: "website",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: t("ogTitle"),
+            description: t("ogDescription"),
+            images: [siteConfig.ogImage],
+        },
+    };
 }
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+    return routing.locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params;
+    const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
+    if (!hasLocale(routing.locales, locale)) {
+        notFound();
+    }
 
-  const messages = await getMessages();
+    const messages = await getMessages();
 
-  const fontClass =
-    locale === "bn"
-      ? `${hindSiliguri.variable} ${inter.variable}`
-      : `${inter.variable} ${hindSiliguri.variable}`;
+    const fontClass =
+        locale === "bn"
+            ? `${hindSiliguri.variable} ${inter.variable}`
+            : `${inter.variable} ${hindSiliguri.variable}`;
 
-  return (
-    <html lang={locale} className={`${fontClass} h-full scroll-smooth antialiased`}>
-      <body className="min-h-full flex flex-col bg-[var(--color-cream)] text-[var(--color-ink)]">
-        <NextIntlClientProvider messages={messages}>
-          <Header locale={locale} />
-          <main className="flex-1 pb-20 md:pb-0">{children}</main>
-          <Footer />
-          <MobileBottomBar />
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang={locale} className={`${fontClass} h-full scroll-smooth antialiased`}>
+            <body className="min-h-full flex flex-col bg-[var(--color-cream)] text-[var(--color-ink)]">
+                <NextIntlClientProvider messages={messages}>
+                    <Header locale={locale} />
+                    <main className="flex-1 pb-20 md:pb-0">{children}</main>
+                    <Footer />
+                    <MobileBottomBar />
+                </NextIntlClientProvider>
+            </body>
+        </html>
+    );
 }
