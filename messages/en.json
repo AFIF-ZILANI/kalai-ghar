@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "title": "Kalai Ghor — Heritage Kalai Ruti of Rajshahi",
+    "description": "Kalai Ghor in Uposhohor, Rajshahi — handmade traditional kalai ruti from black-gram & atap rice flour on an earthen tawa. Served with hasher mangsho, beef bhuna, begun bhorta.",
+    "ogTitle": "Kalai Ghor — Heritage Kalai Ruti of Rajshahi",
+    "ogDescription": "The legendary handmade kalai ruti of Rajshahi. Duck curry, beef bhuna, eggplant bhorta. Come taste North Bengal's heritage."
+  },
+  "nav": {
+    "home": "Home",
+    "menu": "Menu",
+    "story": "Our Story",
+    "visit": "Visit Us",
+    "reserve": "Pre-Order",
+    "gallery": "Gallery",
+    "switchLang": "বাংলা"
+  },
+  "hero": {
+    "headline": "Heritage",
+    "headlineHighlight": "Kalai Ruti",
+    "subheadline": "Handmade on an earthen tawa from black-gram & atap rice flour — a taste passed down through generations",
+    "ctaWhatsApp": "Order on WhatsApp",
+    "ctaCall": "Call Us",
+    "ctaDirections": "Get Directions"
+  },
+  "waitBanner": {
+    "label": "Typical wait time",
+    "note": "Each ruti is handmade to order — freshness takes a little time. Pre-order on WhatsApp to skip the queue."
+  },
+  "featured": {
+    "title": "Signature Dishes",
+    "viewMenu": "View Full Menu"
+  },
+  "heritageTease": {
+    "title": "A Heritage of North Bengal",
+    "body": "The aroma of kalai ruti on a Rajshahi winter morning is more than food — it's identity. Kalai Ghor preserves this centuries-old craft in every hand-pressed bread.",
+    "cta": "Read Our Story"
+  },
+  "menu": {
+    "title": "Our Menu",
+    "subtitle": "Everything made fresh, by hand, to order",
+    "categories": {
+      "ruti": "Kalai Ruti",
+      "bhorta": "Bhorta",
+      "curry": "Curry",
+      "combo": "Combo",
+      "drink": "Drinks"
+    },
+    "priceLabel": "Price",
+    "todoPriceNote": "Price coming soon — please call",
+    "orderWhatsApp": "Order"
+  },
+  "story": {
+    "title": "The Heritage of Kalai Ruti",
+    "subtitle": "A hundred years of North Bengal's flavour",
+    "section1Title": "What is Kalai Ruti?",
+    "section1Body": "Kalai ruti is a thick traditional flatbread made from black-gram (mashkalai) flour blended with atap rice flour and salt, cooked by hand on an earthen tawa. It is the pride of Rajshahi, Chapainawabganj, and Kushtia. Best enjoyed on a winter morning with begun bhorta, green chili mash, coriander chutney, mustard oil, and duck curry.",
+    "section2Title": "The Story of Kalai Ghor",
+    "section2Body": "Kalai Ghor was founded in Uposhohor, Rajshahi, dedicated to preserving this heritage bread. Even a former US Ambassador to Bangladesh made the trip to Rajshahi specifically for our kalai ruti. Tourists visiting Rajshahi make Kalai Ghor a must-stop. We now have an outlet in Dhaka as well.",
+    "section3Title": "Stays fresh for 3–4 days",
+    "section3Body": "A remarkable quality of kalai ruti: it stays fresh for 3–4 days without refrigeration. Visitors from out of town often take a stack home."
+  },
+  "visit": {
+    "title": "Find Us",
+    "addressTitle": "Address",
+    "rajshahiOutlet": "Rajshahi Outlet",
+    "dhakaOutlet": "Dhaka Outlet",
+    "hoursTitle": "Opening Hours",
+    "weekdays": "Mon–Fri",
+    "weekends": "Sat–Sun",
+    "bestTimeTitle": "Best Time to Visit",
+    "bestTimeBody": "To beat the crowd, come on a weekday morning. Weekend evenings are the busiest — pre-order on WhatsApp if you're coming then.",
+    "directionsBtn": "Open in Google Maps",
+    "callBtn": "Call Us"
+  },
+  "reserve": {
+    "title": "Pre-Order",
+    "subtitle": "Fill in your name, party size, and what you'd like — we'll open WhatsApp so you can confirm directly.",
+    "namePlaceholder": "Your name",
+    "partySizePlaceholder": "Number of people",
+    "datePlaceholder": "Preferred date & time",
+    "itemsPlaceholder": "What would you like? (e.g. 4 kalai ruti, duck curry, begun bhorta)",
+    "notesPlaceholder": "Any special requests?",
+    "submitBtn": "Send via WhatsApp",
+    "disclaimer": "Submitting generates a WhatsApp message — no account or payment needed.",
+    "nameLabel": "Name",
+    "partySizeLabel": "Party size",
+    "dateLabel": "Preferred date & time",
+    "itemsLabel": "Order details",
+    "notesLabel": "Special requests"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "subtitle": "Moments from the tawa"
+  },
+  "footer": {
+    "tagline": "The taste of Rajshahi's heritage",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "copyright": "© 2025 Kalai Ghor. All rights reserved."
+  },
+  "mobileBar": {
+    "call": "Call",
+    "whatsapp": "Order",
+    "directions": "Directions"
+  },
+  "common": {
+    "todoPriceShort": "Call for price",
+    "perPiece": "per piece",
+    "perPortion": "per portion"
+  }
+}
