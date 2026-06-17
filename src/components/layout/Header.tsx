@@ -25,7 +25,6 @@ export default function Header({ locale }: Props) {
     const [open, setOpen] = useState(false);
 
     const otherLocale = locale === "bn" ? "en" : "bn";
-    // Build the same path in the other locale
     const pathWithoutLocale = pathname.replace(/^\/(bn|en)/, "") || "/";
     const switchHref = `/${otherLocale}${pathWithoutLocale}`;
 
@@ -35,33 +34,33 @@ export default function Header({ locale }: Props) {
     };
 
     return (
-        <header className="sticky top-0 z-50 bg-[var(--color-cream)]/95 backdrop-blur-sm border-b border-[var(--color-earth-100)] shadow-sm">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
+        <header className="sticky top-0 z-50 bg-[var(--color-cream)]/96 backdrop-blur-md border-b border-[var(--color-earth-100)]">
+            <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+                <div className="flex items-center justify-between h-[60px]">
                     {/* Logo */}
                     <Link
                         href={`/${locale}`}
-                        className="flex flex-col leading-tight"
+                        className="flex flex-col leading-none"
                         aria-label={locale === "bn" ? "কালাই ঘর — হোমপেজ" : "Kalai Ghor — Homepage"}
                     >
-                        <span className="text-xl font-bold text-[var(--color-terracotta-600)] tracking-tight">
+                        <span className="font-display text-[22px] font-semibold text-[var(--color-ink)] tracking-tight leading-none">
                             {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
                         </span>
-                        <span className="text-[10px] text-[var(--color-earth-800)] uppercase tracking-widest">
+                        <span className="text-[9px] font-medium text-[var(--color-terracotta-500)] uppercase tracking-[0.22em] mt-0.5">
                             {locale === "bn" ? "রাজশাহী" : "Rajshahi"}
                         </span>
                     </Link>
 
                     {/* Desktop nav */}
-                    <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+                    <nav className="hidden md:flex items-center gap-0" aria-label="Main navigation">
                         {navKeys.map((key) => (
                             <Link
                                 key={key}
                                 href={`/${locale}${navHrefs[key] === "/" ? "" : navHrefs[key]}`}
-                                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                className={`px-3.5 py-1.5 text-[13px] font-medium transition-colors ${
                                     isActive(key)
-                                        ? "bg-[var(--color-terracotta-100)] text-[var(--color-terracotta-700)]"
-                                        : "text-[var(--color-earth-800)] hover:bg-[var(--color-terracotta-50)] hover:text-[var(--color-terracotta-600)]"
+                                        ? "text-[var(--color-terracotta-600)]"
+                                        : "text-[var(--color-ink)]/60 hover:text-[var(--color-ink)]"
                                 }`}
                             >
                                 {t(key)}
@@ -71,18 +70,18 @@ export default function Header({ locale }: Props) {
                         <Link
                             href={switchHref}
                             aria-label={locale === "bn" ? "Switch to English" : "বাংলায় দেখুন"}
-                            className="ml-2 px-3 py-1.5 rounded-full border border-[var(--color-terracotta-300)] text-[var(--color-terracotta-600)] text-sm font-medium hover:bg-[var(--color-terracotta-500)] hover:text-white transition-colors"
+                            className="ml-4 px-3.5 py-1.5 border border-[var(--color-ink)]/15 text-[var(--color-ink)]/70 text-[13px] font-medium hover:border-[var(--color-terracotta-400)] hover:text-[var(--color-terracotta-600)] transition-colors"
                         >
                             {t("switchLang")}
                         </Link>
                     </nav>
 
-                    {/* Mobile: lang switcher + hamburger */}
-                    <div className="flex md:hidden items-center gap-2">
+                    {/* Mobile */}
+                    <div className="flex md:hidden items-center gap-3">
                         <Link
                             href={switchHref}
                             aria-label={locale === "bn" ? "Switch to English" : "বাংলায় দেখুন"}
-                            className="px-2.5 py-1 rounded-full border border-[var(--color-terracotta-300)] text-[var(--color-terracotta-600)] text-xs font-medium"
+                            className="px-2.5 py-1 border border-[var(--color-ink)]/15 text-[var(--color-ink)]/60 text-xs font-medium"
                         >
                             {t("switchLang")}
                         </Link>
@@ -90,9 +89,9 @@ export default function Header({ locale }: Props) {
                             onClick={() => setOpen(!open)}
                             aria-label={open ? "Close menu" : "Open menu"}
                             aria-expanded={open}
-                            className="p-2 rounded-lg text-[var(--color-earth-800)] hover:bg-[var(--color-terracotta-50)]"
+                            className="p-1.5 text-[var(--color-ink)]/70 hover:text-[var(--color-ink)] transition-colors"
                         >
-                            {open ? <X size={22} /> : <Menu size={22} />}
+                            {open ? <X size={21} /> : <Menu size={21} />}
                         </button>
                     </div>
                 </div>
@@ -100,16 +99,16 @@ export default function Header({ locale }: Props) {
 
             {/* Mobile dropdown */}
             {open && (
-                <div className="md:hidden border-t border-[var(--color-earth-100)] bg-[var(--color-cream)] px-4 py-3 space-y-1">
+                <div className="md:hidden border-t border-[var(--color-earth-100)] bg-[var(--color-cream)] px-6 py-4 space-y-0.5">
                     {navKeys.map((key) => (
                         <Link
                             key={key}
                             href={`/${locale}${navHrefs[key] === "/" ? "" : navHrefs[key]}`}
                             onClick={() => setOpen(false)}
-                            className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                            className={`block px-3 py-2.5 text-sm font-medium transition-colors ${
                                 isActive(key)
-                                    ? "bg-[var(--color-terracotta-100)] text-[var(--color-terracotta-700)]"
-                                    : "text-[var(--color-earth-800)] hover:bg-[var(--color-terracotta-50)]"
+                                    ? "text-[var(--color-terracotta-600)]"
+                                    : "text-[var(--color-ink)]/70 hover:text-[var(--color-ink)]"
                             }`}
                         >
                             {t(key)}

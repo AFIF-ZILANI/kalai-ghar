@@ -13,6 +13,7 @@
     --color-terracotta-800: #6b2414;
     --color-terracotta-900: #4e1a0f;
 
+    --color-saffron-300: #f9d07a;
     --color-saffron-400: #f5b942;
     --color-saffron-500: #e8a020;
     --color-saffron-600: #c47f10;
@@ -32,6 +33,7 @@
 
     /* Fonts */
     --font-sans: var(--font-inter);
+    --font-display: var(--font-playfair);
     --font-bengali: var(--font-hind-siliguri);
 }
 
@@ -45,12 +47,20 @@ body {
     font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Bengali locale uses Bengali font */
 :lang(bn) {
     font-family: var(--font-bengali), var(--font-sans), system-ui, sans-serif;
 }
 
-/* Ensure Bengali numerals look correct */
+.font-display {
+    font-family: var(--font-display), "Georgia", serif;
+}
+
 .bn-numerals {
     font-feature-settings: "lnum" 0;
+}
+
+/* Hairline rule utility */
+.rule-h {
+    border-top: 1px solid currentColor;
+    opacity: 0.2;
 }
