@@ -1,0 +1,92 @@
+[
+  {
+    "id": "seed-1",
+    "src": "https://images.unsplash.com/photo-bKrLCNjS_oQ?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "মাটির তাওয়ায় কালাই রুটি তৈরি হচ্ছে",
+    "altEn": "Kalai ruti being cooked on a tawa",
+    "captionBn": "কালাই রুটি তাওয়ায়",
+    "captionEn": "Kalai ruti on the tawa",
+    "aspect": "landscape",
+    "order": 0
+  },
+  {
+    "id": "seed-2",
+    "src": "https://images.unsplash.com/photo-gwUA_pHaOYY?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "হাঁসের মাংস ও ভাত — কম্বো প্লেট",
+    "altEn": "Curry and rice — combo plate",
+    "captionBn": "কম্বো প্লেট",
+    "captionEn": "Combo plate",
+    "aspect": "square",
+    "order": 1
+  },
+  {
+    "id": "seed-3",
+    "src": "https://images.unsplash.com/photo-EXY9vpK3pAs?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "বেগুন ভর্তার জন্য কাটা বেগুন",
+    "altEn": "Sliced eggplant for begun bhorta",
+    "captionBn": "বেগুন ভর্তা",
+    "captionEn": "Begun bhorta",
+    "aspect": "square",
+    "order": 2
+  },
+  {
+    "id": "seed-4",
+    "src": "https://images.unsplash.com/photo-MJNq-3Q78P4?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "কালাই ঘর রাজশাহীর পরিবেশ",
+    "altEn": "Kalai Ghor Rajshahi — the stall",
+    "captionBn": "কালাই ঘর রাজশাহী",
+    "captionEn": "Kalai Ghor Rajshahi",
+    "aspect": "landscape",
+    "order": 3
+  },
+  {
+    "id": "seed-5",
+    "src": "https://images.unsplash.com/photo-paoGDZSd4cY?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "কালাই রুটির আটা মাখানো হচ্ছে",
+    "altEn": "Dough preparation for kalai ruti",
+    "captionBn": "আটা মাখানো",
+    "captionEn": "Dough preparation",
+    "aspect": "landscape",
+    "order": 4
+  },
+  {
+    "id": "seed-6",
+    "src": "https://images.unsplash.com/photo-TIJEY5Vb8Ng?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "তাজা বেগুন — ভর্তার উপকরণ",
+    "altEn": "Fresh eggplant — key ingredient for bhorta",
+    "captionBn": "তাজা উপকরণ",
+    "captionEn": "Fresh ingredients",
+    "aspect": "square",
+    "order": 5
+  },
+  {
+    "id": "seed-7",
+    "src": "https://images.unsplash.com/photo-ZSukCSw5VV4?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "রুটি ও মাংস কারি প্লেট",
+    "altEn": "Ruti with meat curry on a plate",
+    "captionBn": "রুটি ও কারি",
+    "captionEn": "Ruti & curry",
+    "aspect": "landscape",
+    "order": 6
+  },
+  {
+    "id": "seed-8",
+    "src": "https://images.unsplash.com/photo-Wqgpy1qdV4c?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "হাতে তৈরি কালাই রুটি",
+    "altEn": "Hand-pressed kalai ruti",
+    "captionBn": "হাতে তৈরি রুটি",
+    "captionEn": "Hand-pressed ruti",
+    "aspect": "landscape",
+    "order": 7
+  },
+  {
+    "id": "seed-9",
+    "src": "https://images.unsplash.com/photo-d_kabh_WX9E?auto=format&fit=crop&w=1200&q=85",
+    "altBn": "রাতের কালাই ঘর — আলোকিত পরিবেশ",
+    "altEn": "Evening ambience at Kalai Ghor",
+    "captionBn": "রাতের পরিবেশ",
+    "captionEn": "Evening ambience",
+    "aspect": "landscape",
+    "order": 8
+  }
+]
