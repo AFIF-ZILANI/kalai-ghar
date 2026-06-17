@@ -19,85 +19,87 @@ export default function Footer() {
     ] as const;
 
     return (
-        <footer className="bg-[var(--color-earth-900)] text-[var(--color-earth-100)] mt-16">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
-                    {/* Brand */}
-                    <div>
-                        <p className="text-2xl font-bold text-[var(--color-terracotta-300)]">
-                            {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
-                        </p>
-                        <p className="mt-1 text-sm text-[var(--color-earth-200)]">{t("tagline")}</p>
-                    </div>
+        <footer className="bg-[var(--color-ink)] text-white/60">
+            <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+                {/* Top rule */}
+                <div className="border-t border-white/8 pt-14 pb-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 lg:gap-16">
+                        {/* Brand */}
+                        <div>
+                            <p className="font-display text-2xl font-semibold text-white tracking-tight mb-2">
+                                {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
+                            </p>
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-saffron-400)] mb-4">
+                                {locale === "bn" ? "রাজশাহী, বাংলাদেশ" : "Rajshahi, Bangladesh"}
+                            </p>
+                            <p className="text-sm text-white/45 leading-relaxed">{t("tagline")}</p>
+                        </div>
 
-                    {/* Quick links */}
-                    <div>
-                        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-terracotta-400)] mb-3">
-                            {t("quickLinks")}
-                        </p>
-                        <ul className="space-y-2">
-                            {navLinks.map(({ key, href }) => (
-                                <li key={key}>
-                                    <Link
-                                        href={href}
-                                        className="text-sm text-[var(--color-earth-200)] hover:text-[var(--color-terracotta-300)] transition-colors"
-                                    >
-                                        {nav(key)}
-                                    </Link>
+                        {/* Quick links */}
+                        <div>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/30 mb-4">
+                                {t("quickLinks")}
+                            </p>
+                            <ul className="space-y-2.5">
+                                {navLinks.map(({ key, href }) => (
+                                    <li key={key}>
+                                        <Link
+                                            href={href}
+                                            className="text-[13px] text-white/50 hover:text-white transition-colors"
+                                        >
+                                            {nav(key)}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Contact */}
+                        <div>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/30 mb-4">
+                                {t("contact")}
+                            </p>
+                            <ul className="space-y-3.5 text-[13px]">
+                                <li className="flex items-start gap-2.5">
+                                    <MapPin
+                                        size={14}
+                                        className="mt-0.5 shrink-0 text-[var(--color-terracotta-400)]"
+                                    />
+                                    <span className="text-white/50">
+                                        {siteConfig.address.area}, {siteConfig.address.city}
+                                    </span>
                                 </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Contact */}
-                    <div>
-                        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-terracotta-400)] mb-3">
-                            {t("contact")}
-                        </p>
-                        <ul className="space-y-3 text-sm text-[var(--color-earth-200)]">
-                            <li className="flex items-start gap-2">
-                                <MapPin
-                                    size={15}
-                                    className="mt-0.5 shrink-0 text-[var(--color-terracotta-400)]"
-                                />
-                                <span>
-                                    {siteConfig.address.area}, {siteConfig.address.city}
-                                </span>
-                            </li>
-                            <li>
-                                <a
-                                    href={`tel:${siteConfig.phone}`}
-                                    className="flex items-center gap-2 hover:text-[var(--color-terracotta-300)] transition-colors"
-                                >
-                                    <Phone
-                                        size={15}
-                                        className="text-[var(--color-terracotta-400)]"
-                                    />
-                                    {siteConfig.phone === "TODO_PHONE_NUMBER"
-                                        ? "TODO: Phone"
-                                        : siteConfig.phone}
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href={`https://wa.me/${siteConfig.whatsapp}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 hover:text-[var(--color-terracotta-300)] transition-colors"
-                                >
-                                    <MessageCircle
-                                        size={15}
-                                        className="text-[var(--color-terracotta-400)]"
-                                    />
-                                    WhatsApp
-                                </a>
-                            </li>
-                        </ul>
+                                <li>
+                                    <a
+                                        href={`tel:${siteConfig.phone}`}
+                                        className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"
+                                    >
+                                        <Phone size={14} className="text-[var(--color-terracotta-400)]" />
+                                        {siteConfig.phone === "TODO_PHONE_NUMBER"
+                                            ? "—"
+                                            : siteConfig.phone}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href={`https://wa.me/${siteConfig.whatsapp}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"
+                                    >
+                                        <MessageCircle size={14} className="text-[var(--color-terracotta-400)]" />
+                                        WhatsApp
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div className="mt-10 pt-6 border-t border-[var(--color-earth-800)] text-xs text-[var(--color-earth-200)] text-center">
-                    {t("copyright")}
+                {/* Bottom rule */}
+                <div className="border-t border-white/8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2">
+                    <p className="text-[11px] text-white/25">{t("copyright")}</p>
+                    <p className="text-[11px] text-white/20">{siteConfig.priceRange} · {siteConfig.cuisine.join(" · ")}</p>
                 </div>
             </div>
         </footer>

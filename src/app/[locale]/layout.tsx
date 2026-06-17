@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Hind_Siliguri } from "next/font/google";
+import { Inter, Hind_Siliguri, Playfair_Display } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -20,6 +20,14 @@ const hindSiliguri = Hind_Siliguri({
     subsets: ["bengali", "latin"],
     weight: ["300", "400", "500", "600", "700"],
     variable: "--font-hind-siliguri",
+    display: "swap",
+});
+
+const playfair = Playfair_Display({
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700", "800"],
+    style: ["normal", "italic"],
+    variable: "--font-playfair",
     display: "swap",
 });
 
@@ -78,8 +86,8 @@ export default async function LocaleLayout({ children, params }: Props) {
 
     const fontClass =
         locale === "bn"
-            ? `${hindSiliguri.variable} ${inter.variable}`
-            : `${inter.variable} ${hindSiliguri.variable}`;
+            ? `${hindSiliguri.variable} ${inter.variable} ${playfair.variable}`
+            : `${inter.variable} ${hindSiliguri.variable} ${playfair.variable}`;
 
     return (
         <html lang={locale} className={`${fontClass} h-full scroll-smooth antialiased`}>
