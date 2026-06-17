@@ -32,9 +32,12 @@ export const siteConfig = {
     whatsapp: "TODO_WHATSAPP_NUMBER",
 
     // Google Maps
-    // TODO: Replace with real Google Maps embed URL or Place ID
-    googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=TODO",
-    googleMapsDirectionsUrl: "https://maps.google.com/?q=Kalai+Ghor+Rajshahi",
+    // Replace googleMapsEmbedUrl with the embed URL from Google Maps (Share → Embed a map → copy src).
+    // Current: approximate area embed using search query — works without an API key.
+    // When the exact address is confirmed, generate a precise embed URL from Google Maps.
+    googleMapsEmbedUrl:
+        "https://maps.google.com/maps?q=Uposhohor,+Rajshahi,+Bangladesh&output=embed",
+    googleMapsDirectionsUrl: "https://maps.google.com/?q=Uposhohor,+Rajshahi,+Bangladesh",
 
     // Hours — TODO: Confirm with owner
     hours: {
