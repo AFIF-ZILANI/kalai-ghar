@@ -40,9 +40,10 @@ export default function ReserveForm({ locale, whatsapp }: Props) {
     }
 
     const inputClass =
-        "w-full rounded-lg border border-[var(--color-earth-100)] bg-white px-4 py-2.5 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-earth-800)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--color-terracotta-400)] focus:border-transparent transition";
+        "w-full border border-[var(--color-earth-100)] bg-white px-4 py-3.5 sm:py-3 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink)]/30 focus:outline-none focus:border-[var(--color-terracotta-400)] transition";
 
-    const labelClass = "block text-sm font-medium text-[var(--color-earth-800)] mb-1.5";
+    const labelClass =
+        "block text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--color-ink)]/50 mb-2";
 
     return (
         <form
@@ -50,7 +51,7 @@ export default function ReserveForm({ locale, whatsapp }: Props) {
                 e.preventDefault();
                 window.open(buildWhatsAppURL(), "_blank", "noopener,noreferrer");
             }}
-            className="space-y-5 bg-white rounded-2xl border border-[var(--color-earth-100)] shadow-sm p-6 sm:p-8"
+            className="space-y-5 border border-[var(--color-earth-100)] bg-white p-6 sm:p-8"
         >
             <div>
                 <label htmlFor="reserve-name" className={labelClass}>
@@ -134,7 +135,7 @@ export default function ReserveForm({ locale, whatsapp }: Props) {
 
             <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fb856] text-white font-semibold px-6 py-3.5 rounded-full shadow-md transition-colors text-base"
+                className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fb856] text-white font-semibold px-6 py-4 sm:py-3 transition-colors text-sm tracking-wide"
             >
                 <MessageCircle size={20} />
                 {t("submitBtn")}

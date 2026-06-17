@@ -1,11 +1,11 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ArrowRight } from "lucide-react";
 import { menuItems } from "@content/site-config";
 import { siteConfig } from "@content/site-config";
 import { formatPrice } from "@/lib/utils";
 import type { MenuItem } from "@content/site-config";
+import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
@@ -33,7 +33,6 @@ function groupByCategory(items: MenuItem[]) {
 export default async function MenuPage() {
     const locale = await getLocale();
     const t = await getTranslations("menu");
-    const common = await getTranslations("common");
 
     const grouped = groupByCategory(menuItems);
 
@@ -43,76 +42,64 @@ export default async function MenuPage() {
             : "Hello Kalai Ghor! I'd like to order from the menu.",
     );
 
-    const categoryEmoji: Record<string, string> = {
-        ruti: "🫓",
-        bhorta: "🥬",
-        curry: "🍲",
-        combo: "🍽️",
-        drink: "🍵",
-    };
-
     return (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="text-center mb-12">
-                <h1 className="text-3xl sm:text-4xl font-bold text-[var(--color-terracotta-700)]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-20">
+            {/* Page header */}
+            <div className="mb-10 sm:mb-14">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-terracotta-500)] mb-3">
+                    {locale === "bn" ? "সম্পূর্ণ মেনু" : "Full Menu"}
+                </p>
+                <h1 className="font-display text-3xl sm:text-5xl font-semibold text-[var(--color-ink)] leading-tight">
                     {t("title")}
                 </h1>
-                <p className="mt-2 text-[var(--color-earth-800)]/70">{t("subtitle")}</p>
-                <div className="w-20 h-1 bg-[var(--color-terracotta-500)] rounded-full mx-auto mt-4" />
+                <p className="mt-2 text-sm sm:text-base text-[var(--color-ink)]/50 mt-3">{t("subtitle")}</p>
             </div>
 
-            <div className="space-y-14">
-                {Object.entries(grouped).map(([cat, items]) => (
+            <div className="space-y-12 sm:space-y-16">
+                {Object.entries(grouped).map(([cat, items], catIdx) => (
                     <section key={cat} aria-labelledby={`cat-${cat}`}>
-                        <div className="flex items-center gap-3 mb-6">
-                            <span className="text-3xl" aria-hidden="true">
-                                {categoryEmoji[cat]}
-                            </span>
+                        {/* Category heading with rule */}
+                        <div className="flex items-baseline gap-4 mb-6 border-b border-[var(--color-earth-100)] pb-3">
                             <h2
                                 id={`cat-${cat}`}
-                                className="text-xl sm:text-2xl font-bold text-[var(--color-earth-800)]"
+                                className="font-display text-xl sm:text-2xl font-semibold text-[var(--color-ink)]"
                             >
-                                {t(
-                                    `categories.${cat as "ruti" | "bhorta" | "curry" | "combo" | "drink"}`,
-                                )}
+                                {t(`categories.${cat as "ruti" | "bhorta" | "curry" | "combo" | "drink"}`)}
                             </h2>
-                            <div className="flex-1 h-px bg-[var(--color-earth-100)]" />
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--color-ink)]/30">
+                                {String(catIdx + 1).padStart(2, "0")}
+                            </span>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--color-earth-100)]">
                             {items.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="flex flex-col rounded-xl border border-[var(--color-earth-100)] bg-white p-5 hover:shadow-md transition-shadow"
+                                    className="bg-[var(--color-cream)] p-5 sm:p-6 flex flex-col gap-2"
                                 >
                                     <div className="flex justify-between items-start gap-3">
-                                        <h3 className="font-semibold text-[var(--color-earth-800)] leading-snug">
+                                        <h3 className="font-semibold text-[var(--color-ink)] text-base leading-snug">
                                             {locale === "bn" ? item.nameBn : item.nameEn}
                                         </h3>
-                                        <span className="shrink-0 text-[var(--color-terracotta-600)] font-bold text-sm">
+                                        <span className="shrink-0 font-display font-semibold text-[var(--color-terracotta-600)] text-base">
                                             {item.price !== null
                                                 ? formatPrice(item.price, locale)
                                                 : "—"}
                                         </span>
                                     </div>
 
-                                    {/* Bilingual sub-name */}
-                                    <p className="text-xs text-[var(--color-earth-800)]/50 mt-0.5">
+                                    <p className="text-[11px] text-[var(--color-ink)]/35 tracking-wide">
                                         {locale === "bn" ? item.nameEn : item.nameBn}
                                     </p>
 
-                                    {(locale === "bn"
-                                        ? item.descriptionBn
-                                        : item.descriptionEn) && (
-                                        <p className="mt-2 text-sm text-[var(--color-earth-800)]/70 leading-relaxed flex-1">
-                                            {locale === "bn"
-                                                ? item.descriptionBn
-                                                : item.descriptionEn}
+                                    {(locale === "bn" ? item.descriptionBn : item.descriptionEn) && (
+                                        <p className="text-sm text-[var(--color-ink)]/55 leading-relaxed flex-1">
+                                            {locale === "bn" ? item.descriptionBn : item.descriptionEn}
                                         </p>
                                     )}
 
                                     {item.price === null && (
-                                        <p className="mt-2 text-xs text-[var(--color-saffron-600)] italic">
+                                        <p className="text-[11px] text-[var(--color-saffron-600)]">
                                             {t("todoPriceNote")}
                                         </p>
                                     )}
@@ -124,27 +111,28 @@ export default async function MenuPage() {
             </div>
 
             {/* CTA */}
-            <div className="mt-14 text-center">
-                <p className="text-[var(--color-earth-800)]/70 mb-4 text-sm">
+            <div className="mt-14 sm:mt-20 border-t border-[var(--color-earth-100)] pt-10">
+                <p className="text-sm text-[var(--color-ink)]/50 mb-5 text-center sm:text-left">
                     {locale === "bn"
-                        ? "অর্ডার করতে WhatsApp-এ মেসেজ করুন বা ফোন করুন"
-                        : "Message us on WhatsApp to order or ask about prices"}
+                        ? "অর্ডার করতে WhatsApp-এ মেসেজ করুন বা আগাম অর্ডার দিন"
+                        : "Message us on WhatsApp to place an order or pre-order for your visit"}
                 </p>
-                <a
-                    href={`https://wa.me/${siteConfig.whatsapp}?text=${whatsappMsg}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1fb856] text-white font-semibold px-7 py-3 rounded-full shadow-md transition-colors"
-                >
-                    <MessageCircle size={20} />
-                    {t("orderWhatsApp")}
-                </a>
-                <div className="mt-6">
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <a
+                        href={`https://wa.me/${siteConfig.whatsapp}?text=${whatsappMsg}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fb856] text-white font-semibold px-6 py-4 sm:py-3 transition-colors text-sm tracking-wide"
+                    >
+                        <MessageCircle size={17} strokeWidth={2} />
+                        {t("orderWhatsApp")}
+                    </a>
                     <Link
                         href={`/${locale}/reserve`}
-                        className="text-sm text-[var(--color-terracotta-600)] hover:underline"
+                        className="flex items-center justify-center gap-2 border border-[var(--color-ink)]/15 text-[var(--color-ink)]/60 hover:border-[var(--color-ink)]/40 hover:text-[var(--color-ink)] font-medium px-6 py-4 sm:py-3 transition-colors text-sm"
                     >
-                        {locale === "bn" ? "আগাম অর্ডার করুন →" : "Pre-order for your visit →"}
+                        {locale === "bn" ? "আগাম অর্ডার" : "Pre-order"}
+                        <ArrowRight size={15} />
                     </Link>
                 </div>
             </div>

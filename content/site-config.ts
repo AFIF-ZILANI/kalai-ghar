@@ -20,10 +20,9 @@ export const siteConfig = {
         dhakaStreet: "TODO: Dhaka outlet address",
     },
 
-    // TODO: Confirm geo coordinates
     geo: {
-        lat: 24.3745, // approximate Rajshahi city center
-        lng: 88.6042,
+        lat: 24.377892,
+        lng: 88.598765,
     },
 
     // TODO: Replace with real phone number

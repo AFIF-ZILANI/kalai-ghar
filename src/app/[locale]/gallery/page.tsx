@@ -14,9 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Gallery images — add real photos to public/images/gallery/
- * and update this array. Each image needs bilingual alt text.
- * TODO: Replace placeholder entries with real photos from the owner.
+ * Add real photos: drop files into public/images/gallery/ and populate
+ * the array below with src, altBn, altEn, and optional captions.
  */
 const galleryImages: Array<{
     src: string;
@@ -25,20 +24,16 @@ const galleryImages: Array<{
     captionBn?: string;
     captionEn?: string;
 }> = [
-    // TODO: Add real images, e.g.:
+    // Example (uncomment and replace with real images):
     // {
     //   src: "/images/gallery/ruti-on-tawa.jpg",
     //   altBn: "মাটির তাওয়ায় কালাই রুটি তৈরি হচ্ছে",
     //   altEn: "Kalai ruti being cooked on an earthen tawa",
-    //   captionBn: "মাটির তাওয়ায় হাতে তৈরি কালাই রুটি",
-    //   captionEn: "Hand-pressed kalai ruti on the earthen tawa",
     // },
 ];
 
-const placeholders = Array.from({ length: 9 }, (_, i) => ({
-    id: i,
-    emoji: ["🫓", "🍲", "🥬", "🍽️", "🌾", "🫓", "🍲", "🥬", "🍽️"][i],
-    captionBn: [
+const PLACEHOLDER_CAPTIONS = {
+    bn: [
         "কালাই রুটি তাওয়ায়",
         "হাঁসের মাংস",
         "বেগুন ভর্তা",
@@ -48,8 +43,8 @@ const placeholders = Array.from({ length: 9 }, (_, i) => ({
         "গরুর ভুনা",
         "মরিচ ভর্তা",
         "রাতের পরিবেশ",
-    ][i],
-    captionEn: [
+    ],
+    en: [
         "Kalai ruti on the tawa",
         "Duck curry",
         "Begun bhorta",
@@ -59,30 +54,30 @@ const placeholders = Array.from({ length: 9 }, (_, i) => ({
         "Beef bhuna",
         "Chili bhorta",
         "Evening ambience",
-    ][i],
-}));
+    ],
+};
 
 export default async function GalleryPage() {
     const locale = await getLocale();
     const t = await getTranslations("gallery");
 
     return (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="text-center mb-12">
-                <h1 className="text-3xl sm:text-4xl font-bold text-[var(--color-terracotta-700)]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-20">
+            {/* Page header */}
+            <div className="mb-10 sm:mb-14">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-terracotta-500)] mb-3">
+                    {locale === "bn" ? "ফটোগ্যালারি" : "Photography"}
+                </p>
+                <h1 className="font-display text-3xl sm:text-5xl font-semibold text-[var(--color-ink)] leading-tight">
                     {t("title")}
                 </h1>
-                <p className="mt-2 text-[var(--color-earth-800)]/70">{t("subtitle")}</p>
-                <div className="w-20 h-1 bg-[var(--color-terracotta-500)] rounded-full mx-auto mt-4" />
+                <p className="mt-3 text-sm text-[var(--color-ink)]/50">{t("subtitle")}</p>
             </div>
 
             {galleryImages.length > 0 ? (
-                <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+                <div className="columns-1 sm:columns-2 lg:columns-3 gap-px space-y-px">
                     {galleryImages.map((img, idx) => (
-                        <figure
-                            key={idx}
-                            className="break-inside-avoid rounded-2xl overflow-hidden border border-[var(--color-earth-100)] shadow-sm"
-                        >
+                        <figure key={idx} className="break-inside-avoid overflow-hidden">
                             <Image
                                 src={img.src}
                                 alt={locale === "bn" ? img.altBn : img.altEn}
@@ -92,7 +87,7 @@ export default async function GalleryPage() {
                                 loading="lazy"
                             />
                             {(img.captionBn || img.captionEn) && (
-                                <figcaption className="px-4 py-2 text-xs text-[var(--color-earth-800)]/60">
+                                <figcaption className="px-3 py-2 text-[11px] text-[var(--color-ink)]/40 bg-[var(--color-cream)]">
                                     {locale === "bn" ? img.captionBn : img.captionEn}
                                 </figcaption>
                             )}
@@ -100,32 +95,31 @@ export default async function GalleryPage() {
                     ))}
                 </div>
             ) : (
-                // Placeholder grid until real photos are added
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {placeholders.map((p) => (
+                /* Placeholder grid — no emojis, styled with brand language */
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-[var(--color-earth-100)]">
+                    {PLACEHOLDER_CAPTIONS[locale as "bn" | "en"].map((caption, i) => (
                         <div
-                            key={p.id}
-                            className="rounded-2xl bg-gradient-to-br from-[var(--color-terracotta-50)] to-[var(--color-terracotta-100)] aspect-square flex flex-col items-center justify-center gap-3 border border-[var(--color-terracotta-100)]"
+                            key={i}
+                            className="bg-[var(--color-earth-50)] aspect-square flex flex-col items-center justify-center gap-3 p-5"
                         >
-                            <span className="text-5xl" aria-hidden="true">
-                                {p.emoji}
-                            </span>
-                            <span className="text-xs text-[var(--color-earth-800)]/60 text-center px-3">
-                                {locale === "bn" ? p.captionBn : p.captionEn}
-                            </span>
-                            <span className="text-[10px] text-[var(--color-terracotta-400)] italic">
-                                TODO: add photo
+                            {/* Abstract brand-mark stand-in */}
+                            <div className="w-8 h-8 border border-[var(--color-terracotta-300)] rotate-45 flex items-center justify-center">
+                                <div className="w-2 h-2 bg-[var(--color-terracotta-400)]" />
+                            </div>
+                            <span className="text-xs text-[var(--color-ink)]/40 text-center leading-snug">
+                                {caption}
                             </span>
                         </div>
                     ))}
                 </div>
             )}
 
-            <div className="mt-10 rounded-xl bg-[var(--color-earth-50)] border border-[var(--color-earth-100)] p-5 text-sm text-[var(--color-earth-800)]/70">
-                <p className="font-medium text-[var(--color-earth-800)] mb-1">
-                    {locale === "bn" ? "ছবি যোগ করার নির্দেশিকা" : "How to add photos"}
+            {/* Owner instruction — only visible in dev/admin context */}
+            <div className="mt-8 border-t border-[var(--color-earth-100)] pt-6 text-sm text-[var(--color-ink)]/40">
+                <p className="font-medium text-[var(--color-ink)]/60 mb-1">
+                    {locale === "bn" ? "ছবি যোগ করবেন কীভাবে" : "How to add photos"}
                 </p>
-                <p>
+                <p className="leading-relaxed">
                     {locale === "bn"
                         ? "public/images/gallery/ ফোল্ডারে ছবি রাখুন এবং src/app/[locale]/gallery/page.tsx-এ galleryImages অ্যারে আপডেট করুন।"
                         : "Add photos to public/images/gallery/ and update the galleryImages array in src/app/[locale]/gallery/page.tsx."}
