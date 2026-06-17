@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Phone, MapPin, Clock, Star } from "lucide-react";
 import { siteConfig } from "@content/site-config";
 import LocationMap from "@/components/map/LocationMap";
+import { getContactData } from "@/lib/server/contact";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
@@ -16,15 +17,15 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function VisitPage() {
     const locale = await getLocale();
     const t = await getTranslations("visit");
+    const contact = getContactData();
 
     const mapLabel =
         locale === "bn"
-            ? `কালাই ঘর — উপশহর, রাজশাহী`
-            : `Kalai Ghor — Uposhohor, Rajshahi`;
+            ? `কালাই ঘর — ${contact.address.area}, রাজশাহী`
+            : `Kalai Ghor — ${contact.address.area}, Rajshahi`;
 
     return (
         <>
-            {/* Constrained content area */}
             <div className="max-w-5xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-20">
                 {/* Page header */}
                 <div className="mb-10 sm:mb-14">
@@ -42,11 +43,7 @@ export default async function VisitPage() {
                     {/* Address */}
                     <section className="bg-[var(--color-cream)] p-6 sm:p-8">
                         <div className="flex items-center gap-2.5 mb-6">
-                            <MapPin
-                                size={15}
-                                className="text-[var(--color-terracotta-500)]"
-                                strokeWidth={2}
-                            />
+                            <MapPin size={15} className="text-[var(--color-terracotta-500)]" strokeWidth={2} />
                             <h2 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-ink)]/50">
                                 {t("addressTitle")}
                             </h2>
@@ -58,10 +55,10 @@ export default async function VisitPage() {
                                     {t("rajshahiOutlet")}
                                 </p>
                                 <p className="font-display text-xl font-semibold text-[var(--color-ink)] leading-snug">
-                                    {siteConfig.address.area}
+                                    {contact.address.area}
                                 </p>
                                 <p className="text-sm text-[var(--color-ink)]/50 mt-0.5">
-                                    {siteConfig.address.city},{" "}
+                                    {contact.address.city},{" "}
                                     {locale === "bn" ? "বাংলাদেশ" : "Bangladesh"}
                                 </p>
                             </div>
@@ -71,18 +68,19 @@ export default async function VisitPage() {
                                     {t("dhakaOutlet")}
                                 </p>
                                 <p className="text-sm text-[var(--color-ink)]/50 italic">
-                                    {siteConfig.address.dhakaStreet === "TODO: Dhaka outlet address"
+                                    {!contact.address.dhakaStreet ||
+                                    contact.address.dhakaStreet === "TODO: Dhaka outlet address"
                                         ? locale === "bn"
                                             ? "শীঘ্রই আসছে"
                                             : "Coming soon"
-                                        : siteConfig.address.dhakaStreet}
+                                        : contact.address.dhakaStreet}
                                 </p>
                             </div>
                         </div>
 
                         <div className="mt-8 flex flex-col sm:flex-row gap-3">
                             <a
-                                href={siteConfig.googleMapsDirectionsUrl}
+                                href={contact.googleMapsDirectionsUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-ink)] hover:bg-[var(--color-terracotta-700)] text-white text-[11px] font-semibold uppercase tracking-widest px-4 py-4 sm:py-3 transition-colors"
@@ -91,7 +89,7 @@ export default async function VisitPage() {
                                 {t("directionsBtn")}
                             </a>
                             <a
-                                href={`tel:${siteConfig.phone}`}
+                                href={`tel:${contact.phone}`}
                                 className="flex-1 flex items-center justify-center gap-2 border border-[var(--color-ink)]/15 text-[var(--color-ink)]/70 hover:border-[var(--color-ink)]/40 hover:text-[var(--color-ink)] text-[11px] font-semibold uppercase tracking-widest px-4 py-4 sm:py-3 transition-colors"
                             >
                                 <Phone size={13} />
@@ -103,11 +101,7 @@ export default async function VisitPage() {
                     {/* Hours */}
                     <section className="bg-[var(--color-cream)] p-6 sm:p-8">
                         <div className="flex items-center gap-2.5 mb-6">
-                            <Clock
-                                size={15}
-                                className="text-[var(--color-terracotta-500)]"
-                                strokeWidth={2}
-                            />
+                            <Clock size={15} className="text-[var(--color-terracotta-500)]" strokeWidth={2} />
                             <h2 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-ink)]/50">
                                 {t("hoursTitle")}
                             </h2>
@@ -117,17 +111,13 @@ export default async function VisitPage() {
                             <div className="flex justify-between items-baseline py-3.5 border-b border-[var(--color-earth-100)]">
                                 <span className="text-sm text-[var(--color-ink)]/60">{t("weekdays")}</span>
                                 <span className="font-display text-base font-semibold text-[var(--color-ink)]">
-                                    {locale === "bn"
-                                        ? siteConfig.hours.weekdaysBn
-                                        : siteConfig.hours.weekdays}
+                                    {locale === "bn" ? contact.hours.weekdaysBn : contact.hours.weekdays}
                                 </span>
                             </div>
                             <div className="flex justify-between items-baseline py-3.5">
                                 <span className="text-sm text-[var(--color-ink)]/60">{t("weekends")}</span>
                                 <span className="font-display text-base font-semibold text-[var(--color-ink)]">
-                                    {locale === "bn"
-                                        ? siteConfig.hours.weekendsBn
-                                        : siteConfig.hours.weekends}
+                                    {locale === "bn" ? contact.hours.weekendsBn : contact.hours.weekends}
                                 </span>
                             </div>
                         </div>
@@ -149,27 +139,26 @@ export default async function VisitPage() {
                                 {locale === "bn" ? "আনুমানিক অপেক্ষার সময়" : "Typical wait"}
                             </p>
                             <p className="text-sm text-[var(--color-ink)]/70">
-                                {siteConfig.waitTime[locale as "bn" | "en"]}
+                                {contact.waitTime[locale as "bn" | "en"]}
                             </p>
                         </div>
                     </section>
                 </div>
             </div>
 
-            {/* Map — full viewport width, breaks out of content constraint */}
+            {/* Map */}
             <div className="w-full h-[55svh] sm:h-[500px]">
                 <LocationMap
-                    lat={siteConfig.geo.lat}
-                    lng={siteConfig.geo.lng}
-                    directionsUrl={siteConfig.googleMapsDirectionsUrl}
+                    lat={contact.geo.lat}
+                    lng={contact.geo.lng}
+                    directionsUrl={contact.googleMapsDirectionsUrl}
                     label={mapLabel}
                     name={locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
-                    address={`${siteConfig.address.area}, ${siteConfig.address.city}`}
+                    address={`${contact.address.area}, ${contact.address.city}`}
                     height={undefined}
                 />
             </div>
 
-            {/* Bottom padding for mobile bottom bar */}
             <div className="pb-6 sm:pb-0" />
         </>
     );

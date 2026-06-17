@@ -1,0 +1,26 @@
+{
+  "phone": "",
+  "whatsapp": "",
+  "address": {
+    "street": "",
+    "area": "",
+    "city": "",
+    "dhakaStreet": ""
+  },
+  "geo": {
+    "lat": 0,
+    "lng": 0
+  },
+  "googleMapsDirectionsUrl": "",
+  "googleMapsEmbedUrl": "",
+  "hours": {
+    "weekdays": "",
+    "weekdaysBn": "",
+    "weekends": "",
+    "weekendsBn": ""
+  },
+  "waitTime": {
+    "en": "",
+    "bn": ""
+  }
+}
