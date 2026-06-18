@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import LogoMark from "@/components/LogoMark";
 
 type Props = { locale: string };
 
@@ -40,14 +41,17 @@ export default function Header({ locale }: Props) {
                     {/* Logo */}
                     <Link
                         href={`/${locale}`}
-                        className="flex flex-col leading-none"
+                        className="flex items-center gap-3 group"
                         aria-label={locale === "bn" ? "কালাই ঘর — হোমপেজ" : "Kalai Ghor — Homepage"}
                     >
-                        <span className="font-display text-[22px] font-semibold text-[var(--color-ink)] tracking-tight leading-none">
-                            {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
-                        </span>
-                        <span className="text-[9px] font-medium text-[var(--color-terracotta-500)] uppercase tracking-[0.22em] mt-0.5">
-                            {locale === "bn" ? "রাজশাহী" : "Rajshahi"}
+                        <LogoMark size={38} className="shrink-0 transition-opacity group-hover:opacity-80" />
+                        <span className="flex flex-col leading-none">
+                            <span className="font-display text-[20px] font-semibold text-[var(--color-ink)] tracking-tight leading-none">
+                                {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
+                            </span>
+                            <span className="text-[8.5px] font-semibold text-[var(--color-terracotta-500)] uppercase tracking-[0.24em] mt-[3px]">
+                                {locale === "bn" ? "রাজশাহী" : "Rajshahi"}
+                            </span>
                         </span>
                     </Link>
 
