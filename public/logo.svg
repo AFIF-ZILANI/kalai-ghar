@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none" role="img" aria-label="Kalai Ghor">
+  <defs>
+    <path id="top" d="M 28,150 A 122,122 0 0,0 272,150"/>
+    <path id="bot" d="M 38,150 A 112,112 0 0,1 262,150"/>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="150" cy="150" r="148" fill="#fdf8f2"/>
+
+  <!-- Outer ring -->
+  <circle cx="150" cy="150" r="145" stroke="#b84520" stroke-width="4.5"/>
+  <!-- Inner dashed ring -->
+  <circle cx="150" cy="150" r="133" stroke="#b84520" stroke-width="1" stroke-dasharray="2 4"/>
+
+  <!-- Diamond ornaments 9 & 3 o'clock -->
+  <rect x="14" y="146" width="8" height="8" fill="#b84520" transform="rotate(45,18,150)"/>
+  <rect x="278" y="146" width="8" height="8" fill="#b84520" transform="rotate(45,282,150)"/>
+
+  <!-- Bengali arc text -->
+  <text font-family="'Hind Siliguri','Noto Sans Bengali',sans-serif" font-size="21" font-weight="600" fill="#b84520">
+    <textPath href="#top" startOffset="50%" text-anchor="middle">কালাই ঘর</textPath>
+  </text>
+
+  <!-- English arc text -->
+  <text font-family="'Playfair Display',Georgia,serif" font-size="12" font-weight="700" letter-spacing="4" fill="#b84520">
+    <textPath href="#bot" startOffset="50%" text-anchor="middle">KALAI GHOR</textPath>
+  </text>
+
+  <!-- Flanking rules -->
+  <line x1="62" y1="258" x2="80"  y2="264" stroke="#b84520" stroke-width="1" stroke-linecap="round"/>
+  <line x1="220" y1="264" x2="238" y2="258" stroke="#b84520" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Ruti (flatbread circle) -->
+  <circle cx="150" cy="133" r="30" stroke="#1a1007" stroke-width="2.5"/>
+  <line x1="129" y1="127" x2="171" y2="127" stroke="#1a1007" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="124" y1="133" x2="176" y2="133" stroke="#1a1007" stroke-width="2"   stroke-linecap="round"/>
+  <line x1="129" y1="139" x2="171" y2="139" stroke="#1a1007" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Tawa (griddle pan) -->
+  <ellipse cx="150" cy="159" rx="46" ry="9" stroke="#1a1007" stroke-width="2.5"/>
+  <ellipse cx="150" cy="159" rx="40" ry="5.5" stroke="#1a1007" stroke-width="1" opacity="0.35"/>
+
+  <!-- Handle -->
+  <path d="M 104,159 Q 90,157 82,153" stroke="#1a1007" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="81" cy="153" r="3" fill="#1a1007"/>
+
+  <!-- RAJSHAHI label -->
+  <text x="150" y="191" text-anchor="middle" font-family="'Inter',Arial,sans-serif" font-size="7.5" font-weight="700" letter-spacing="3.5" fill="#b84520" opacity="0.6">RAJSHAHI</text>
+</svg>

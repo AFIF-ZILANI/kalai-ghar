@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Phone, MessageCircle, MapPin, Clock, ArrowRight } from "lucide-react";
 import { siteConfig, menuItems } from "@content/site-config";
 import { formatPrice } from "@/lib/utils";
+import LogoSeal from "@/components/LogoSeal";
 
 const CATEGORY_IMAGES: Record<string, string> = {
     ruti: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80",
@@ -69,6 +70,11 @@ export default async function HomePage() {
                 />
                 {/* Gradient overlay — bottom-heavy so the image reads in the upper half */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0D0905]/90 via-[#0D0905]/40 to-[#0D0905]/10" />
+
+                {/* Seal — centred, upper area of hero */}
+                <div className="absolute top-12 sm:top-16 inset-x-0 flex justify-center pointer-events-none select-none">
+                    <LogoSeal size={160} variant="light" className="opacity-80 drop-shadow-lg" />
+                </div>
 
                 {/* Editorial content — left-aligned, bottom of frame */}
                 <div className="relative w-full max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pb-16 sm:pb-24">
