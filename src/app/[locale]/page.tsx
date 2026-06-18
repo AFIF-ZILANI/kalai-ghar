@@ -186,6 +186,7 @@ export default async function HomePage() {
                                         alt={locale === "bn" ? item.nameBn : item.nameEn}
                                         fill
                                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                        loading="lazy"
                                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                                     />
                                     <div className="absolute inset-0 bg-[var(--color-ink)]/10 group-hover:bg-[var(--color-ink)]/0 transition-colors duration-500" />

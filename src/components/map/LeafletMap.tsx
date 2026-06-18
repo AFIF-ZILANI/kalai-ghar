@@ -23,8 +23,11 @@ export default function LeafletMap({ lat, lng, zoom = 16, label, popupHtml }: Pr
     useEffect(() => {
         if (!containerRef.current || mapRef.current) return;
 
+        let active = true; // prevents stale async callbacks in React StrictMode
+
         // Leaflet must load after mount (requires window)
         import("leaflet").then((L) => {
+            if (!active || !containerRef.current || mapRef.current) return;
             import("leaflet/dist/leaflet.css");
 
             const map = L.map(containerRef.current!, {
@@ -79,6 +82,7 @@ export default function LeafletMap({ lat, lng, zoom = 16, label, popupHtml }: Pr
         });
 
         return () => {
+            active = false;
             mapRef.current?.remove();
             mapRef.current = null;
         };

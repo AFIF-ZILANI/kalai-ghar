@@ -90,7 +90,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             : `${inter.variable} ${hindSiliguri.variable} ${playfair.variable}`;
 
     return (
-        <html lang={locale} className={`${fontClass} h-full scroll-smooth antialiased`}>
+        <html lang={locale} data-scroll-behavior="smooth" className={`${fontClass} h-full antialiased`}>
             <body className="min-h-full flex flex-col bg-[var(--color-cream)] text-[var(--color-ink)]">
                 <NextIntlClientProvider messages={messages}>
                     <Header locale={locale} />
