@@ -2,8 +2,10 @@ import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { siteConfig } from "@content/site-config";
 import { getContactData } from "@/lib/server/contact";
+import { readMenu } from "@/lib/server/menu";
 import { OG_IMAGE, pageAlternates, buildOg } from "@/lib/seo";
 import ReserveForm from "./ReserveForm";
+import { Suspense } from "react";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
@@ -27,6 +29,7 @@ export default async function ReservePage() {
     const locale = await getLocale();
     const t = await getTranslations("reserve");
     const contact = getContactData();
+    const menuItems = readMenu();
 
     return (
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -40,7 +43,9 @@ export default async function ReservePage() {
                 <div className="w-20 h-1 bg-[var(--color-terracotta-500)] rounded-full mx-auto mt-5" />
             </div>
 
-            <ReserveForm locale={locale} whatsapp={contact.whatsapp} />
+            <Suspense>
+                <ReserveForm locale={locale} whatsapp={contact.whatsapp} menuItems={menuItems} />
+            </Suspense>
 
             <p className="mt-6 text-center text-xs text-[var(--color-earth-800)]/50">
                 {t("disclaimer")}

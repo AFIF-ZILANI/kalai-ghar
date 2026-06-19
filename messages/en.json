@@ -39,11 +39,11 @@
     "title": "Our Menu",
     "subtitle": "Everything made fresh, by hand, to order",
     "categories": {
-      "ruti": "Kalai Ruti",
-      "bhorta": "Bhorta",
-      "curry": "Curry",
-      "combo": "Combo",
-      "drink": "Drinks"
+      "ruti": "Ruti & Bread",
+      "rice": "Rice & Khichuri",
+      "curry": "Meat & Curry",
+      "bhorta": "Bhorta & Vegetables",
+      "side": "Fish, Eggs & More"
     },
     "priceLabel": "Price",
     "todoPriceNote": "Price coming soon — please call",

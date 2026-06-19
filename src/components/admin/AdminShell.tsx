@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ImageIcon, MapPinIcon, LogOutIcon, ExternalLinkIcon } from "lucide-react";
+import { ImageIcon, MapPinIcon, LogOutIcon, ExternalLinkIcon, UtensilsIcon } from "lucide-react";
 
 const navItems = [
+    { href: "/admin/menu", label: "Menu", icon: UtensilsIcon },
     { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },
     { href: "/admin/contact", label: "Contact & Hours", icon: MapPinIcon },
 ];
