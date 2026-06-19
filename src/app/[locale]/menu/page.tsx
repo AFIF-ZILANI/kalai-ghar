@@ -6,14 +6,23 @@ import { getContactData } from "@/lib/server/contact";
 import { formatPrice } from "@/lib/utils";
 import type { MenuItem } from "@content/site-config";
 import Link from "next/link";
+import { OG_IMAGE, pageAlternates, buildOg } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
+    const isBn = locale === "bn";
     const t = await getTranslations("menu");
+    const title = `${t("title")} — ${isBn ? "কালাই ঘর" : "Kalai Ghor"}`;
+    const description = isBn
+        ? "কালাই ঘরের সম্পূর্ণ মেনু — কালাই রুটি, বিভিন্ন ভর্তা, গরু ও হাঁসের মাংস, কম্বো প্লেট।"
+        : "Full menu of Kalai Ghor Rajshahi — kalai ruti, bhorta varieties, beef & duck curry, combo plates.";
     return {
         metadataBase: new URL(siteConfig.siteUrl),
-        title: `${t("title")} — ${locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}`,
-        description: t("subtitle"),
+        title,
+        description,
+        alternates: pageAlternates(locale, "/menu"),
+        openGraph: buildOg({ locale, title, description, path: "/menu", image: OG_IMAGE }),
+        twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE.url] },
     };
 }
 
@@ -36,14 +45,45 @@ export default async function MenuPage() {
 
     const contact = getContactData();
     const grouped = groupByCategory(menuItems);
+    const isBn = locale === "bn";
 
     const whatsappMsg = encodeURIComponent(
-        locale === "bn"
+        isBn
             ? "নমস্কার কালাই ঘর! আমি মেনু দেখে অর্ডার দিতে চাই।"
             : "Hello Kalai Ghor! I'd like to order from the menu.",
     );
 
+    const menuJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FoodEstablishment",
+        name: siteConfig.name,
+        url: `${siteConfig.siteUrl}/${locale}`,
+        servesCuisine: siteConfig.cuisine,
+        hasMenu: {
+            "@type": "Menu",
+            name: isBn ? "কালাই ঘর মেনু" : "Kalai Ghor Menu",
+            hasMenuSection: Object.entries(grouped).map(([cat, items]) => ({
+                "@type": "MenuSection",
+                name: cat.charAt(0).toUpperCase() + cat.slice(1),
+                hasMenuItem: items.map((item) => ({
+                    "@type": "MenuItem",
+                    name: isBn ? item.nameBn : item.nameEn,
+                    description: isBn ? item.descriptionBn : item.descriptionEn,
+                    ...(item.price !== null && {
+                        offers: {
+                            "@type": "Offer",
+                            price: item.price,
+                            priceCurrency: "BDT",
+                        },
+                    }),
+                })),
+            })),
+        },
+    };
+
     return (
+        <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(menuJsonLd) }} />
         <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-20">
             {/* Page header */}
             <div className="mb-10 sm:mb-14">
@@ -138,5 +178,6 @@ export default async function MenuPage() {
                 </div>
             </div>
         </div>
+        </>
     );
 }

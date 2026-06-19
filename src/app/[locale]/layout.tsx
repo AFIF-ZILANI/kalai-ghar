@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@i18n/routing";
 import { siteConfig } from "@content/site-config";
 import { getContactData } from "@/lib/server/contact";
+import { OG_IMAGE, pageAlternates } from "@/lib/seo";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileBottomBar from "@/components/layout/MobileBottomBar";
@@ -41,25 +42,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: "metadata" });
 
-    const alternates = {
-        canonical: `${siteConfig.siteUrl}/${locale}`,
-        languages: {
-            bn: `${siteConfig.siteUrl}/bn`,
-            en: `${siteConfig.siteUrl}/en`,
-        },
-    };
-
     return {
         metadataBase: new URL(siteConfig.siteUrl),
         title: t("title"),
         description: t("description"),
-        alternates,
+        alternates: pageAlternates(locale, "/"),
+        icons: {
+            icon: [{ url: "/logo.png", type: "image/png" }],
+            apple: [{ url: "/logo.png", type: "image/png" }],
+            shortcut: "/logo.png",
+        },
         openGraph: {
             title: t("ogTitle"),
             description: t("ogDescription"),
             url: `${siteConfig.siteUrl}/${locale}`,
             siteName: siteConfig.name,
-            images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+            images: [OG_IMAGE],
             locale: locale === "bn" ? "bn_BD" : "en_US",
             type: "website",
         },
@@ -67,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             card: "summary_large_image",
             title: t("ogTitle"),
             description: t("ogDescription"),
-            images: [siteConfig.ogImage],
+            images: [OG_IMAGE.url],
         },
     };
 }

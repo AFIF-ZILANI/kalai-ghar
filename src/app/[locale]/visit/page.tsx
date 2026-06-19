@@ -4,13 +4,23 @@ import { Phone, MapPin, Clock, Star } from "lucide-react";
 import { siteConfig } from "@content/site-config";
 import LocationMap from "@/components/map/LocationMap";
 import { getContactData } from "@/lib/server/contact";
+import { OG_IMAGE, pageAlternates, buildOg } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
+    const isBn = locale === "bn";
     const t = await getTranslations("visit");
+    const title = `${t("title")} — ${isBn ? "কালাই ঘর" : "Kalai Ghor"}`;
+    const description = isBn
+        ? "কালাই ঘরের ঠিকানা, খোলার সময়, মানচিত্র ও যোগাযোগ — রাজশাহী উপশহর।"
+        : "Kalai Ghor address, opening hours, map and contact — Uposhohor, Rajshahi, Bangladesh.";
     return {
         metadataBase: new URL(siteConfig.siteUrl),
-        title: `${t("title")} — ${locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}`,
+        title,
+        description,
+        alternates: pageAlternates(locale, "/visit"),
+        openGraph: buildOg({ locale, title, description, path: "/visit", image: OG_IMAGE }),
+        twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE.url] },
     };
 }
 
@@ -19,13 +29,52 @@ export default async function VisitPage() {
     const t = await getTranslations("visit");
     const contact = getContactData();
 
-    const mapLabel =
-        locale === "bn"
-            ? `কালাই ঘর — ${contact.address.area}, রাজশাহী`
-            : `Kalai Ghor — ${contact.address.area}, Rajshahi`;
+    const isBn = locale === "bn";
+    const mapLabel = isBn
+        ? `কালাই ঘর — ${contact.address.area}, রাজশাহী`
+        : `Kalai Ghor — ${contact.address.area}, Rajshahi`;
+
+    const localBusinessJsonLd = {
+        "@context": "https://schema.org",
+        "@type": ["Restaurant", "FoodEstablishment"],
+        name: siteConfig.name,
+        alternateName: siteConfig.nameBn,
+        url: `${siteConfig.siteUrl}/${locale}`,
+        telephone: contact.phone,
+        priceRange: siteConfig.priceRange,
+        servesCuisine: siteConfig.cuisine,
+        address: {
+            "@type": "PostalAddress",
+            streetAddress: contact.address.street,
+            addressLocality: contact.address.city,
+            addressCountry: "BD",
+        },
+        geo: {
+            "@type": "GeoCoordinates",
+            latitude: contact.geo.lat,
+            longitude: contact.geo.lng,
+        },
+        hasMap: contact.googleMapsDirectionsUrl,
+        openingHoursSpecification: [
+            {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                opens: "08:00",
+                closes: "22:00",
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Saturday", "Sunday"],
+                opens: "07:00",
+                closes: "23:00",
+            },
+        ],
+        image: `${siteConfig.siteUrl}${"/og-image.jpg"}`,
+    };
 
     return (
         <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }} />
             <div className="max-w-5xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-20">
                 {/* Page header */}
                 <div className="mb-10 sm:mb-14">
