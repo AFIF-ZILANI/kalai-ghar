@@ -5,6 +5,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@i18n/routing";
 import { siteConfig } from "@content/site-config";
+import { getContactData } from "@/lib/server/contact";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileBottomBar from "@/components/layout/MobileBottomBar";
@@ -83,6 +84,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     }
 
     const messages = await getMessages();
+    const contact = getContactData();
 
     const fontClass =
         locale === "bn"
@@ -95,8 +97,16 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <NextIntlClientProvider messages={messages}>
                     <Header locale={locale} />
                     <main className="flex-1 pb-20 md:pb-0">{children}</main>
-                    <Footer />
-                    <MobileBottomBar />
+                    <Footer
+                        phone={contact.phone}
+                        whatsapp={contact.whatsapp}
+                        address={contact.address}
+                    />
+                    <MobileBottomBar
+                        phone={contact.phone}
+                        whatsapp={contact.whatsapp}
+                        mapsUrl={contact.googleMapsDirectionsUrl}
+                    />
                 </NextIntlClientProvider>
             </body>
         </html>

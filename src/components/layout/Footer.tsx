@@ -4,7 +4,13 @@ import { useLocale } from "next-intl";
 import { Phone, MapPin, MessageCircle } from "lucide-react";
 import { siteConfig } from "@content/site-config";
 
-export default function Footer() {
+type Props = {
+    phone: string;
+    whatsapp: string;
+    address: { area: string; city: string; street: string; dhakaStreet: string };
+};
+
+export default function Footer({ phone, whatsapp, address }: Props) {
     const t = useTranslations("footer");
     const nav = useTranslations("nav");
     const locale = useLocale();
@@ -19,7 +25,7 @@ export default function Footer() {
     ] as const;
 
     return (
-        <footer className="bg-[var(--color-ink)] text-white/60">
+        <footer className="bg-(--color-ink) text-white/60">
             <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
                 {/* Top rule */}
                 <div className="border-t border-white/8 pt-14 pb-12">
@@ -61,28 +67,23 @@ export default function Footer() {
                             </p>
                             <ul className="space-y-3.5 text-[13px]">
                                 <li className="flex items-start gap-2.5">
-                                    <MapPin
-                                        size={14}
-                                        className="mt-0.5 shrink-0 text-[var(--color-terracotta-400)]"
-                                    />
+                                    <MapPin size={14} className="mt-0.5 shrink-0 text-[var(--color-terracotta-400)]" />
                                     <span className="text-white/50">
-                                        {siteConfig.address.area}, {siteConfig.address.city}
+                                        {address.area}, {address.city}
                                     </span>
                                 </li>
                                 <li>
                                     <a
-                                        href={`tel:${siteConfig.phone}`}
+                                        href={`tel:${phone}`}
                                         className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"
                                     >
                                         <Phone size={14} className="text-[var(--color-terracotta-400)]" />
-                                        {siteConfig.phone === "TODO_PHONE_NUMBER"
-                                            ? "—"
-                                            : siteConfig.phone}
+                                        {phone === "TODO_PHONE_NUMBER" ? "—" : phone}
                                     </a>
                                 </li>
                                 <li>
                                     <a
-                                        href={`https://wa.me/${siteConfig.whatsapp}`}
+                                        href={`https://wa.me/${whatsapp}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"

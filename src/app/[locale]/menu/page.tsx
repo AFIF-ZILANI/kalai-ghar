@@ -1,8 +1,8 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { MessageCircle, ArrowRight } from "lucide-react";
-import { menuItems } from "@content/site-config";
-import { siteConfig } from "@content/site-config";
+import { menuItems, siteConfig } from "@content/site-config";
+import { getContactData } from "@/lib/server/contact";
 import { formatPrice } from "@/lib/utils";
 import type { MenuItem } from "@content/site-config";
 import Link from "next/link";
@@ -34,6 +34,7 @@ export default async function MenuPage() {
     const locale = await getLocale();
     const t = await getTranslations("menu");
 
+    const contact = getContactData();
     const grouped = groupByCategory(menuItems);
 
     const whatsappMsg = encodeURIComponent(
@@ -119,7 +120,7 @@ export default async function MenuPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                     <a
-                        href={`https://wa.me/${siteConfig.whatsapp}?text=${whatsappMsg}`}
+                        href={`https://wa.me/${contact.whatsapp}?text=${whatsappMsg}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fb856] text-white font-semibold px-6 py-4 sm:py-3 transition-colors text-sm tracking-wide"
