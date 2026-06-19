@@ -38,18 +38,21 @@
     --font-bengali: var(--font-hind-siliguri);
 }
 
-/* Reset react-day-picker base styles — we fully control via Tailwind classNames */
+/* react-day-picker — fully override base styles, Tailwind controls everything */
 .rdp {
     --rdp-accent-color: var(--color-terracotta-500);
     --rdp-background-color: var(--color-earth-100);
     margin: 0;
+    width: 100%;
 }
-.rdp-months { width: 100%; }
-.rdp-month { width: 100%; }
-.rdp-table { width: 100%; max-width: none; }
-.rdp-head_cell,
-.rdp-cell { text-align: center; }
-.rdp-day { margin: 0 auto; }
+.rdp-months  { width: 100%; }
+.rdp-month   { width: 100%; }
+/* Force table to fill container with equal columns */
+.rdp-table   { width: 100% !important; max-width: none !important; table-layout: fixed; border-collapse: collapse; }
+.rdp-head_cell { width: auto !important; padding: 0 !important; }
+.rdp-cell    { width: auto !important; padding: 2px !important; }
+/* Day button fills its cell */
+.rdp-day     { width: 100% !important; margin: 0 !important; border-radius: 0.375rem; }
 
 html {
     scroll-behavior: smooth;
