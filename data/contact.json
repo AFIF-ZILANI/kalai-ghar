@@ -1,26 +1,26 @@
 {
-  "phone": "",
-  "whatsapp": "",
+  "phone": "01711416920",
+  "whatsapp": "01711416920",
   "address": {
-    "street": "",
-    "area": "",
-    "city": "",
-    "dhakaStreet": ""
+    "street": "Uposhohor",
+    "area": "Uposhohor",
+    "city": "Rajshahi",
+    "dhakaStreet": "TODO: Dhaka outlet address"
   },
   "geo": {
-    "lat": 0,
-    "lng": 0
+    "lat": 24.377892,
+    "lng": 88.598765
   },
-  "googleMapsDirectionsUrl": "",
-  "googleMapsEmbedUrl": "",
+  "googleMapsDirectionsUrl": "https://maps.google.com/?q=Uposhohor,+Rajshahi,+Bangladesh",
+  "googleMapsEmbedUrl": "https://maps.google.com/maps?q=Uposhohor,+Rajshahi,+Bangladesh&output=embed",
   "hours": {
-    "weekdays": "",
-    "weekdaysBn": "",
-    "weekends": "",
-    "weekendsBn": ""
+    "weekdays": "8:00 AM – 10:00 PM",
+    "weekdaysBn": "সকাল ৮টা – রাত ১০টা",
+    "weekends": "7:00 AM – 11:00 PM",
+    "weekendsBn": "সকাল ৭টা – রাত ১১টা"
   },
   "waitTime": {
-    "en": "",
-    "bn": ""
+    "en": "Weekend evenings: expect 30–45 min wait. Weekday mornings: 10–15 min.",
+    "bn": "সাপ্তাহিক ছুটির সন্ধ্যায়: ৩০–৪৫ মিনিট অপেক্ষা। সপ্তাহের দিনে সকালে: ১০–১৫ মিনিট।"
   }
 }
