@@ -1,10 +1,11 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, MessageCircle, MapPin, Clock, ArrowRight } from "lucide-react";
+import { Phone, MessageCircle, MapPin, Clock, ArrowRight, Star } from "lucide-react";
 import { siteConfig, menuItems } from "@content/site-config";
 import { formatPrice } from "@/lib/utils";
-import LogoSeal from "@/components/LogoSeal";
+import fs from "fs";
+import path from "path";
 
 const CATEGORY_IMAGES: Record<string, string> = {
     ruti: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80",
@@ -14,11 +15,28 @@ const CATEGORY_IMAGES: Record<string, string> = {
     drink: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=800&q=80",
 };
 
+type Notable = {
+    id: string;
+    nameEn: string; nameBn: string;
+    titleEn: string; titleBn: string;
+    quoteEn: string; quoteBn: string;
+    imageSrc: string;
+    date: string; flag?: string; verified: boolean;
+};
+
+function readNotables(): Notable[] {
+    try {
+        const raw = fs.readFileSync(path.join(process.cwd(), "data", "notables.json"), "utf-8");
+        return JSON.parse(raw);
+    } catch { return []; }
+}
+
 export default async function HomePage() {
     const locale = await getLocale();
     const t = await getTranslations();
 
     const featuredItems = menuItems.filter((item) => item.featured);
+    const notables = readNotables();
 
     const whatsappMsg = encodeURIComponent(
         locale === "bn"
@@ -71,9 +89,16 @@ export default async function HomePage() {
                 {/* Gradient overlay — bottom-heavy so the image reads in the upper half */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0D0905]/90 via-[#0D0905]/40 to-[#0D0905]/10" />
 
-                {/* Seal — centred, upper area of hero */}
-                <div className="absolute top-12 sm:top-16 inset-x-0 flex justify-center pointer-events-none select-none">
-                    <LogoSeal size={160} variant="light" className="opacity-80 drop-shadow-lg" />
+                {/* Logo seal — centred, upper area of hero */}
+                <div className="absolute top-10 sm:top-14 inset-x-0 flex justify-center pointer-events-none select-none">
+                    <Image
+                        src="/logo.png"
+                        alt="Kalai Ghor"
+                        width={140}
+                        height={140}
+                        className="opacity-90 drop-shadow-2xl"
+                        priority
+                    />
                 </div>
 
                 {/* Editorial content — left-aligned, bottom of frame */}
@@ -270,6 +295,68 @@ export default async function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* ═══ DISTINGUISHED VISITORS ═══ */}
+            {notables.length > 0 && (
+                <section aria-labelledby="notables-heading" className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-28">
+                    <div className="mb-12">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-terracotta-500)] mb-3">
+                            {locale === "bn" ? "বিশিষ্ট অতিথি" : "Distinguished Visitors"}
+                        </p>
+                        <h2
+                            id="notables-heading"
+                            className="font-display text-4xl sm:text-5xl font-semibold text-[var(--color-ink)] leading-tight"
+                        >
+                            {locale === "bn" ? "যাঁরা কালাই ঘরে এসেছেন" : "Who Has Dined With Us"}
+                        </h2>
+                        <div className="mt-4 w-10 h-px bg-[var(--color-terracotta-400)]" />
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {notables.map((n) => (
+                            <div
+                                key={n.id}
+                                className="group relative bg-[var(--color-cream)] border border-[var(--color-earth-100)] overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                            >
+                                {/* Photo */}
+                                <div className="relative h-64 overflow-hidden bg-[var(--color-earth-100)]">
+                                    <Image
+                                        src={n.imageSrc}
+                                        alt={locale === "bn" ? n.nameBn : n.nameEn}
+                                        fill
+                                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                        className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                                        unoptimized={n.imageSrc.startsWith("http")}
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)]/60 to-transparent" />
+                                    {n.flag && (
+                                        <span className="absolute top-3 right-3 text-2xl drop-shadow">{n.flag}</span>
+                                    )}
+                                    {n.verified && (
+                                        <div className="absolute top-3 left-3 flex items-center gap-1 bg-[var(--color-terracotta-600)] text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5">
+                                            <Star size={8} fill="currentColor" />
+                                            {locale === "bn" ? "যাচাইকৃত" : "Verified"}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Info */}
+                                <div className="p-5">
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-terracotta-500)] mb-1">
+                                        {locale === "bn" ? n.titleBn : n.titleEn} · {n.date}
+                                    </p>
+                                    <h3 className="font-display text-lg font-semibold text-[var(--color-ink)] leading-snug mb-3">
+                                        {locale === "bn" ? n.nameBn : n.nameEn}
+                                    </h3>
+                                    <blockquote className="text-sm text-[var(--color-ink)]/60 leading-relaxed italic border-l-2 border-[var(--color-terracotta-300)] pl-3">
+                                        {locale === "bn" ? n.quoteBn : n.quoteEn}
+                                    </blockquote>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
         </>
     );
 }

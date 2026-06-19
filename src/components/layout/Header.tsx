@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import LogoMark from "@/components/LogoMark";
+import Image from "next/image";
 
 type Props = { locale: string };
 
@@ -44,7 +44,14 @@ export default function Header({ locale }: Props) {
                         className="flex items-center gap-3 group"
                         aria-label={locale === "bn" ? "কালাই ঘর — হোমপেজ" : "Kalai Ghor — Homepage"}
                     >
-                        <LogoMark size={38} className="shrink-0 transition-opacity group-hover:opacity-80" />
+                        <Image
+                            src="/logo.png"
+                            alt="Kalai Ghor logo"
+                            width={40}
+                            height={40}
+                            className="shrink-0 transition-opacity group-hover:opacity-80"
+                            priority
+                        />
                         <span className="flex flex-col leading-none">
                             <span className="font-display text-[20px] font-semibold text-[var(--color-ink)] tracking-tight leading-none">
                                 {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}

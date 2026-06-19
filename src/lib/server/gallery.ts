@@ -9,6 +9,7 @@ export type GalleryItem = {
     captionBn: string;
     captionEn: string;
     aspect: "landscape" | "square" | "portrait";
+    category?: "food" | "kitchen" | "ambience" | "people";
     order: number;
 };
 

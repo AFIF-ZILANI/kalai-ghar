@@ -3,7 +3,10 @@
 import AdminShell from "@/components/admin/AdminShell";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Trash2Icon, PencilIcon, CheckIcon, XIcon, PlusIcon, UploadIcon } from "lucide-react";
+import {
+    Trash2Icon, PencilIcon, CheckIcon, XIcon, PlusIcon, UploadIcon,
+    ChevronUpIcon, ChevronDownIcon, GripVerticalIcon,
+} from "lucide-react";
 
 type GalleryItem = {
     id: string;
@@ -13,6 +16,7 @@ type GalleryItem = {
     captionBn: string;
     captionEn: string;
     aspect: "landscape" | "square" | "portrait";
+    category?: "food" | "kitchen" | "ambience" | "people";
     order: number;
 };
 
@@ -28,6 +32,7 @@ const BLANK_FORM = {
     captionBn: "",
     captionEn: "",
     aspect: "landscape" as GalleryItem["aspect"],
+    category: "food" as NonNullable<GalleryItem["category"]>,
     src: "",
 };
 
@@ -41,6 +46,7 @@ export default function GalleryAdminPage() {
     const [addFile, setAddFile] = useState<File | null>(null);
     const [addPreview, setAddPreview] = useState<string | null>(null);
     const [saving, setSaving] = useState(false);
+    const [reordering, setReordering] = useState(false);
     const [toast, setToast] = useState("");
     const fileRef = useRef<HTMLInputElement>(null);
 
@@ -73,6 +79,7 @@ export default function GalleryAdminPage() {
             captionBn: item.captionBn,
             captionEn: item.captionEn,
             aspect: item.aspect,
+            category: item.category,
         });
     }
 
@@ -93,11 +100,7 @@ export default function GalleryAdminPage() {
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0] ?? null;
         setAddFile(file);
-        if (file) {
-            setAddPreview(URL.createObjectURL(file));
-        } else {
-            setAddPreview(null);
-        }
+        setAddPreview(file ? URL.createObjectURL(file) : null);
     }
 
     async function handleAdd(e: React.FormEvent) {
@@ -111,6 +114,7 @@ export default function GalleryAdminPage() {
         fd.append("captionBn", addForm.captionBn);
         fd.append("captionEn", addForm.captionEn);
         fd.append("aspect", addForm.aspect);
+        fd.append("category", addForm.category);
         const res = await fetch("/api/admin/gallery", { method: "POST", body: fd });
         const newItem = await res.json();
         setItems((prev) => [...prev, newItem]);
@@ -122,6 +126,22 @@ export default function GalleryAdminPage() {
         showToast("Image added.");
     }
 
+    async function moveItem(idx: number, dir: -1 | 1) {
+        const newItems = [...items];
+        const target = idx + dir;
+        if (target < 0 || target >= newItems.length) return;
+        [newItems[idx], newItems[target]] = [newItems[target], newItems[idx]];
+        setItems(newItems);
+        setReordering(true);
+        await fetch("/api/admin/gallery/reorder", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ids: newItems.map((i) => i.id) }),
+        });
+        setReordering(false);
+        showToast("Order saved.");
+    }
+
     return (
         <AdminShell>
             <div className="p-6 sm:p-8 max-w-5xl">
@@ -131,6 +151,7 @@ export default function GalleryAdminPage() {
                         <h1 className="text-xl font-semibold text-neutral-800">Gallery</h1>
                         <p className="text-sm text-neutral-500 mt-0.5">
                             {items.length} image{items.length !== 1 ? "s" : ""}
+                            {reordering && <span className="ml-2 text-amber-500">Saving order…</span>}
                         </p>
                     </div>
                     <button
@@ -145,12 +166,9 @@ export default function GalleryAdminPage() {
                 {/* Add form modal */}
                 {showAdd && (
                     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-                        <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6">
-                            <h2 className="text-base font-semibold text-neutral-800 mb-4">
-                                Add Image
-                            </h2>
+                        <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+                            <h2 className="text-base font-semibold text-neutral-800 mb-4">Add Image</h2>
                             <form onSubmit={handleAdd} className="space-y-4">
-                                {/* File upload */}
                                 <div>
                                     <label className="block text-xs font-medium text-neutral-600 mb-1.5">
                                         Upload image
@@ -160,11 +178,7 @@ export default function GalleryAdminPage() {
                                         className="border-2 border-dashed border-neutral-300 rounded-lg p-4 text-center cursor-pointer hover:border-neutral-400 transition-colors"
                                     >
                                         {addPreview ? (
-                                            <img
-                                                src={addPreview}
-                                                alt="preview"
-                                                className="mx-auto max-h-40 object-contain rounded"
-                                            />
+                                            <img src={addPreview} alt="preview" className="mx-auto max-h-40 object-contain rounded" />
                                         ) : (
                                             <div className="flex flex-col items-center gap-2 py-4 text-neutral-400">
                                                 <UploadIcon size={24} />
@@ -172,13 +186,7 @@ export default function GalleryAdminPage() {
                                             </div>
                                         )}
                                     </div>
-                                    <input
-                                        ref={fileRef}
-                                        type="file"
-                                        accept="image/*"
-                                        className="hidden"
-                                        onChange={handleFileChange}
-                                    />
+                                    <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
                                 </div>
 
                                 {!addFile && (
@@ -189,9 +197,7 @@ export default function GalleryAdminPage() {
                                         <input
                                             type="url"
                                             value={addForm.src}
-                                            onChange={(e) =>
-                                                setAddForm((f) => ({ ...f, src: e.target.value }))
-                                            }
+                                            onChange={(e) => setAddForm((f) => ({ ...f, src: e.target.value }))}
                                             placeholder="https://..."
                                             className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
                                         />
@@ -199,90 +205,50 @@ export default function GalleryAdminPage() {
                                 )}
 
                                 <div className="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <label className="block text-xs font-medium text-neutral-600 mb-1">
-                                            Caption (Bangla)
-                                        </label>
-                                        <input
-                                            type="text"
-                                            value={addForm.captionBn}
-                                            onChange={(e) =>
-                                                setAddForm((f) => ({
-                                                    ...f,
-                                                    captionBn: e.target.value,
-                                                }))
-                                            }
-                                            className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-medium text-neutral-600 mb-1">
-                                            Caption (English)
-                                        </label>
-                                        <input
-                                            type="text"
-                                            value={addForm.captionEn}
-                                            onChange={(e) =>
-                                                setAddForm((f) => ({
-                                                    ...f,
-                                                    captionEn: e.target.value,
-                                                }))
-                                            }
-                                            className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-medium text-neutral-600 mb-1">
-                                            Alt text (Bangla)
-                                        </label>
-                                        <input
-                                            type="text"
-                                            value={addForm.altBn}
-                                            onChange={(e) =>
-                                                setAddForm((f) => ({
-                                                    ...f,
-                                                    altBn: e.target.value,
-                                                }))
-                                            }
-                                            className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-medium text-neutral-600 mb-1">
-                                            Alt text (English)
-                                        </label>
-                                        <input
-                                            type="text"
-                                            value={addForm.altEn}
-                                            onChange={(e) =>
-                                                setAddForm((f) => ({
-                                                    ...f,
-                                                    altEn: e.target.value,
-                                                }))
-                                            }
-                                            className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
-                                        />
-                                    </div>
+                                    {[
+                                        { label: "Caption (Bangla)", key: "captionBn" as const },
+                                        { label: "Caption (English)", key: "captionEn" as const },
+                                        { label: "Alt text (Bangla)", key: "altBn" as const },
+                                        { label: "Alt text (English)", key: "altEn" as const },
+                                    ].map(({ label, key }) => (
+                                        <div key={key}>
+                                            <label className="block text-xs font-medium text-neutral-600 mb-1">{label}</label>
+                                            <input
+                                                type="text"
+                                                value={addForm[key]}
+                                                onChange={(e) => setAddForm((f) => ({ ...f, [key]: e.target.value }))}
+                                                className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
 
-                                <div>
-                                    <label className="block text-xs font-medium text-neutral-600 mb-1">
-                                        Aspect ratio
-                                    </label>
-                                    <select
-                                        value={addForm.aspect}
-                                        onChange={(e) =>
-                                            setAddForm((f) => ({
-                                                ...f,
-                                                aspect: e.target.value as GalleryItem["aspect"],
-                                            }))
-                                        }
-                                        className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
-                                    >
-                                        <option value="landscape">Landscape (3:2)</option>
-                                        <option value="square">Square (1:1)</option>
-                                        <option value="portrait">Portrait (3:4)</option>
-                                    </select>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label className="block text-xs font-medium text-neutral-600 mb-1">Aspect ratio</label>
+                                        <select
+                                            value={addForm.aspect}
+                                            onChange={(e) => setAddForm((f) => ({ ...f, aspect: e.target.value as GalleryItem["aspect"] }))}
+                                            className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
+                                        >
+                                            <option value="landscape">Landscape (3:2)</option>
+                                            <option value="square">Square (1:1)</option>
+                                            <option value="portrait">Portrait (3:4)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-medium text-neutral-600 mb-1">Category</label>
+                                        <select
+                                            value={addForm.category}
+                                            onChange={(e) => setAddForm((f) => ({ ...f, category: e.target.value as NonNullable<GalleryItem["category"]> }))}
+                                            className="w-full px-2.5 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900"
+                                        >
+                                            <option value="food">Food</option>
+                                            <option value="kitchen">Kitchen</option>
+                                            <option value="ambience">Ambience</option>
+                                            <option value="people">People / Guests</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div className="flex gap-2 pt-1">
@@ -295,12 +261,7 @@ export default function GalleryAdminPage() {
                                     </button>
                                     <button
                                         type="button"
-                                        onClick={() => {
-                                            setShowAdd(false);
-                                            setAddForm(BLANK_FORM);
-                                            setAddFile(null);
-                                            setAddPreview(null);
-                                        }}
+                                        onClick={() => { setShowAdd(false); setAddForm(BLANK_FORM); setAddFile(null); setAddPreview(null); }}
                                         className="px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
                                     >
                                         Cancel
@@ -311,6 +272,14 @@ export default function GalleryAdminPage() {
                     </div>
                 )}
 
+                {/* Reorder hint */}
+                {items.length > 1 && (
+                    <p className="flex items-center gap-1.5 text-xs text-neutral-400 mb-4">
+                        <GripVerticalIcon size={13} />
+                        Use the arrows to reorder images. Order is reflected on the public gallery.
+                    </p>
+                )}
+
                 {/* Gallery grid */}
                 {loading ? (
                     <div className="text-sm text-neutral-500">Loading…</div>
@@ -318,15 +287,38 @@ export default function GalleryAdminPage() {
                     <div className="text-sm text-neutral-500">No images yet. Add one above.</div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {items.map((item) => {
+                        {items.map((item, idx) => {
                             const dims = ASPECT_DIMS[item.aspect];
                             const isEditing = editingId === item.id;
                             return (
-                                <div
-                                    key={item.id}
-                                    className="bg-white rounded-xl border border-neutral-200 overflow-hidden"
-                                >
-                                    <div className="relative bg-neutral-100">
+                                <div key={item.id} className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
+                                    {/* Order controls */}
+                                    <div className="flex items-center gap-1 px-3 pt-2 pb-0">
+                                        <span className="text-[10px] font-mono text-neutral-300 mr-1">#{idx + 1}</span>
+                                        <button
+                                            onClick={() => moveItem(idx, -1)}
+                                            disabled={idx === 0}
+                                            title="Move up"
+                                            className="p-0.5 text-neutral-300 hover:text-neutral-600 disabled:opacity-20 transition-colors"
+                                        >
+                                            <ChevronUpIcon size={14} />
+                                        </button>
+                                        <button
+                                            onClick={() => moveItem(idx, 1)}
+                                            disabled={idx === items.length - 1}
+                                            title="Move down"
+                                            className="p-0.5 text-neutral-300 hover:text-neutral-600 disabled:opacity-20 transition-colors"
+                                        >
+                                            <ChevronDownIcon size={14} />
+                                        </button>
+                                        {item.category && (
+                                            <span className="ml-auto text-[10px] text-neutral-300 bg-neutral-100 px-1.5 py-0.5 rounded capitalize">
+                                                {item.category}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="relative bg-neutral-100 mx-3 mt-1 rounded overflow-hidden">
                                         <Image
                                             src={item.src}
                                             alt={item.altEn || "gallery image"}
@@ -336,102 +328,68 @@ export default function GalleryAdminPage() {
                                             unoptimized={item.src.startsWith("http")}
                                         />
                                     </div>
+
                                     <div className="p-3">
                                         {isEditing ? (
                                             <div className="space-y-2">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Caption (Bangla)"
-                                                    value={editDraft.captionBn ?? ""}
-                                                    onChange={(e) =>
-                                                        setEditDraft((d) => ({
-                                                            ...d,
-                                                            captionBn: e.target.value,
-                                                        }))
-                                                    }
-                                                    className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none focus:ring-1 focus:ring-neutral-900"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Caption (English)"
-                                                    value={editDraft.captionEn ?? ""}
-                                                    onChange={(e) =>
-                                                        setEditDraft((d) => ({
-                                                            ...d,
-                                                            captionEn: e.target.value,
-                                                        }))
-                                                    }
-                                                    className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none focus:ring-1 focus:ring-neutral-900"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Alt (Bangla)"
-                                                    value={editDraft.altBn ?? ""}
-                                                    onChange={(e) =>
-                                                        setEditDraft((d) => ({
-                                                            ...d,
-                                                            altBn: e.target.value,
-                                                        }))
-                                                    }
-                                                    className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none focus:ring-1 focus:ring-neutral-900"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Alt (English)"
-                                                    value={editDraft.altEn ?? ""}
-                                                    onChange={(e) =>
-                                                        setEditDraft((d) => ({
-                                                            ...d,
-                                                            altEn: e.target.value,
-                                                        }))
-                                                    }
-                                                    className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none focus:ring-1 focus:ring-neutral-900"
-                                                />
-                                                <select
-                                                    value={editDraft.aspect ?? "landscape"}
-                                                    onChange={(e) =>
-                                                        setEditDraft((d) => ({
-                                                            ...d,
-                                                            aspect: e.target
-                                                                .value as GalleryItem["aspect"],
-                                                        }))
-                                                    }
-                                                    className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none focus:ring-1 focus:ring-neutral-900"
-                                                >
-                                                    <option value="landscape">Landscape</option>
-                                                    <option value="square">Square</option>
-                                                    <option value="portrait">Portrait</option>
-                                                </select>
+                                                {[
+                                                    { ph: "Caption (Bangla)", key: "captionBn" as const },
+                                                    { ph: "Caption (English)", key: "captionEn" as const },
+                                                    { ph: "Alt (Bangla)", key: "altBn" as const },
+                                                    { ph: "Alt (English)", key: "altEn" as const },
+                                                ].map(({ ph, key }) => (
+                                                    <input
+                                                        key={key}
+                                                        type="text"
+                                                        placeholder={ph}
+                                                        value={(editDraft[key] as string) ?? ""}
+                                                        onChange={(e) => setEditDraft((d) => ({ ...d, [key]: e.target.value }))}
+                                                        className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none focus:ring-1 focus:ring-neutral-900"
+                                                    />
+                                                ))}
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <select
+                                                        value={editDraft.aspect ?? "landscape"}
+                                                        onChange={(e) => setEditDraft((d) => ({ ...d, aspect: e.target.value as GalleryItem["aspect"] }))}
+                                                        className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none"
+                                                    >
+                                                        <option value="landscape">Landscape</option>
+                                                        <option value="square">Square</option>
+                                                        <option value="portrait">Portrait</option>
+                                                    </select>
+                                                    <select
+                                                        value={editDraft.category ?? "food"}
+                                                        onChange={(e) => setEditDraft((d) => ({ ...d, category: e.target.value as GalleryItem["category"] }))}
+                                                        className="w-full px-2 py-1 text-xs border border-neutral-300 rounded focus:outline-none"
+                                                    >
+                                                        <option value="food">Food</option>
+                                                        <option value="kitchen">Kitchen</option>
+                                                        <option value="ambience">Ambience</option>
+                                                        <option value="people">People</option>
+                                                    </select>
+                                                </div>
                                                 <div className="flex gap-1.5 pt-1">
                                                     <button
                                                         onClick={() => saveEdit(item.id)}
                                                         disabled={saving}
                                                         className="flex items-center gap-1 px-2.5 py-1 bg-neutral-900 text-white text-xs rounded hover:bg-neutral-700 disabled:opacity-50 transition-colors"
                                                     >
-                                                        <CheckIcon size={11} />
-                                                        Save
+                                                        <CheckIcon size={11} /> Save
                                                     </button>
                                                     <button
                                                         onClick={() => setEditingId(null)}
                                                         className="flex items-center gap-1 px-2.5 py-1 text-neutral-600 text-xs border border-neutral-200 rounded hover:bg-neutral-50 transition-colors"
                                                     >
-                                                        <XIcon size={11} />
-                                                        Cancel
+                                                        <XIcon size={11} /> Cancel
                                                     </button>
                                                 </div>
                                             </div>
                                         ) : (
                                             <div>
                                                 <p className="text-xs text-neutral-500 truncate">
-                                                    {item.captionEn || (
-                                                        <span className="italic text-neutral-300">
-                                                            No caption
-                                                        </span>
-                                                    )}
+                                                    {item.captionEn || <span className="italic text-neutral-300">No caption</span>}
                                                 </p>
-                                                <p className="text-[11px] text-neutral-400 truncate">
-                                                    {item.captionBn}
-                                                </p>
+                                                <p className="text-[11px] text-neutral-400 truncate">{item.captionBn}</p>
                                                 <div className="flex items-center gap-1.5 mt-2">
                                                     <span className="text-[10px] text-neutral-300 bg-neutral-100 px-1.5 py-0.5 rounded">
                                                         {item.aspect}
@@ -462,7 +420,6 @@ export default function GalleryAdminPage() {
                 )}
             </div>
 
-            {/* Toast */}
             {toast && (
                 <div className="fixed bottom-6 right-6 bg-neutral-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg">
                     {toast}

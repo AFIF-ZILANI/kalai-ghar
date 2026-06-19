@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     const captionBn = (formData.get("captionBn") as string) ?? "";
     const captionEn = (formData.get("captionEn") as string) ?? "";
     const aspect = (formData.get("aspect") as GalleryItem["aspect"]) ?? "landscape";
+    const category = (formData.get("category") as GalleryItem["category"]) ?? undefined;
 
     const items = readGallery();
     const id = randomUUID();
@@ -45,6 +46,7 @@ export async function POST(request: NextRequest) {
         captionBn,
         captionEn,
         aspect,
+        ...(category && { category }),
         order: items.length,
     };
     items.push(newItem);
