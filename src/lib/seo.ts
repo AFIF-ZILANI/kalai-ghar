@@ -4,7 +4,7 @@ export const OG_IMAGE = {
     url: "/og-image.jpg",
     width: 2000,
     height: 1128,
-    alt: "Kalai Ghor — Heritage Kalai Ruti restaurant in Rajshahi, Bangladesh",
+    alt: "Kalai Ghor — Chapainawabganj's famous kalai ruti, served in Rajshahi, Bangladesh",
 } as const;
 
 /** Canonical URL + hreflang alternates for a given locale + path segment. */

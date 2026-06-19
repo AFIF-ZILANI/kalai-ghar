@@ -7,8 +7,8 @@ export const siteConfig = {
     // Business identity
     name: "Kalai Ghor",
     nameBn: "কালাই ঘর",
-    tagline: "Heritage Kalai Ruti of Rajshahi",
-    taglineBn: "রাজশাহীর ঐতিহ্যবাহী কালাই রুটি",
+    tagline: "Chapainawabganj's Kalai Ruti — in Rajshahi",
+    taglineBn: "চাঁপাইনবাবগঞ্জের ঐতিহ্যবাহী কালাই রুটি, রাজশাহীতে",
 
     // TODO: Confirm exact address with owner
     address: {

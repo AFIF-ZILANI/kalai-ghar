@@ -11,8 +11,8 @@ export async function generateMetadata(): Promise<Metadata> {
     const t = await getTranslations("story");
     const title = `${t("title")} — ${isBn ? "কালাই ঘর" : "Kalai Ghor"}`;
     const description = isBn
-        ? "রাজশাহীর ঐতিহ্যবাহী কালাই রুটির গল্প — মাশকালাই ডালের আটায় মাটির তাওয়ায় তৈরি উত্তরবঙ্গের শতবর্ষী খাবার।"
-        : "The story of kalai ruti — a century-old North Bengal flatbread made from black-gram flour on an earthen tawa, Rajshahi's culinary pride.";
+        ? "কালাই রুটির গল্প — মাশকালাই ডালের আটায় মাটির তাওয়ায় তৈরি চাঁপাইনবাবগঞ্জের শতবর্ষী ঐতিহ্যবাহী খাবার।"
+        : "The story of kalai ruti — a century-old flatbread from Chapainawabganj, made from black-gram flour on an earthen tawa, now beloved across North Bengal.";
     return {
         metadataBase: new URL(siteConfig.siteUrl),
         title,
@@ -39,8 +39,8 @@ export default async function StoryPage() {
         "@type": "Article",
         headline: isBn ? "কালাই রুটির ঐতিহ্য" : "The Heritage of Kalai Ruti",
         description: isBn
-            ? "উত্তরবঙ্গের শত বছরের ঐতিহ্যবাহী কালাই রুটির গল্প"
-            : "A century-old North Bengal flatbread tradition",
+            ? "চাঁপাইনবাবগঞ্জের শত বছরের ঐতিহ্যবাহী কালাই রুটির গল্প"
+            : "A century-old flatbread tradition from Chapainawabganj",
         url: `${siteConfig.siteUrl}/${locale}/story`,
         publisher: {
             "@type": "Restaurant",
