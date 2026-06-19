@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { MessageCircle, MinusIcon, PlusIcon, XIcon, PlusCircleIcon } from "lucide-react";
@@ -42,29 +42,24 @@ export default function ReserveForm({ locale, whatsapp, menuItems }: Props) {
     const [partySize, setPartySize] = useState("");
     const [dateTime, setDateTime] = useState("");
     const [notes, setNotes] = useState("");
-    const [cart, setCart] = useState<Record<string, number>>({});
-    const [showPicker, setShowPicker] = useState(false);
-    const [pickerCat, setPickerCat] = useState(CATEGORY_ORDER[0]);
-
-    // Initialise cart from ?items=id1:qty1,id2:qty2
-    useEffect(() => {
+    const [cart, setCart] = useState<Record<string, number>>(() => {
         const raw = searchParams.get("items");
-        if (!raw) return;
+        if (!raw) return {};
         const initial: Record<string, number> = {};
         raw.split(",").forEach((pair) => {
             const [id, qty] = pair.split(":");
             if (id && qty && Number(qty) > 0) initial[id] = Number(qty);
         });
-        setCart(initial);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        return initial;
+    });
+    const [showPicker, setShowPicker] = useState(false);
+    const [pickerCat, setPickerCat] = useState(CATEGORY_ORDER[0]);
 
     function setQty(id: string, delta: number) {
         setCart((prev) => {
             const next = (prev[id] ?? 0) + delta;
             if (next <= 0) {
-                const { [id]: _, ...rest } = prev;
-                return rest;
+                return Object.fromEntries(Object.entries(prev).filter(([k]) => k !== id));
             }
             return { ...prev, [id]: next };
         });

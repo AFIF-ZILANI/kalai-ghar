@@ -35,8 +35,7 @@ export default function MenuItemSelector({ items, locale, categoryLabels, catego
         setCart((prev) => {
             const next = (prev[id] ?? 0) + delta;
             if (next <= 0) {
-                const { [id]: _, ...rest } = prev;
-                return rest;
+                return Object.fromEntries(Object.entries(prev).filter(([k]) => k !== id));
             }
             return { ...prev, [id]: next };
         });
