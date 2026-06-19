@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { MessageCircle, MinusIcon, PlusIcon, XIcon, PlusCircleIcon } from "lucide-react";
 import { toWaNumber } from "@/lib/whatsapp";
+import DateTimePicker from "@/components/ui/DateTimePicker";
 
 type MenuItem = {
     id: string;
@@ -80,13 +81,31 @@ export default function ReserveForm({ locale, whatsapp, menuItems }: Props) {
     const totalPrice = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
     const totalQty = cartItems.reduce((s, i) => s + i.qty, 0);
 
+    function formatDateTime(raw: string) {
+        // raw is "YYYY-MM-DD HH:MM" or partial
+        const [datePart, timePart] = raw.split(" ");
+        if (!datePart) return raw;
+        const MONTHS_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        const MONTHS_BN = ["জানু","ফেব্রু","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টে","অক্টো","নভে","ডিসে"];
+        const d = new Date(datePart + "T00:00:00");
+        const dateLabel = isBn
+            ? `${d.getDate()} ${MONTHS_BN[d.getMonth()]} ${d.getFullYear()}`
+            : `${MONTHS_EN[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+        if (!timePart) return dateLabel;
+        const [h, min] = timePart.split(":").map(Number);
+        const period = h < 12 ? (isBn ? "সকাল" : "AM") : (isBn ? "বিকেল/রাত" : "PM");
+        const h12 = h % 12 || 12;
+        const timeLabel = `${h12}:${String(min).padStart(2, "0")} ${period}`;
+        return `${dateLabel}, ${timeLabel}`;
+    }
+
     function buildMessage() {
         const lines: string[] = [];
         if (isBn) {
             lines.push("🙏 নমস্কার কালাই ঘর! আমি একটি আগাম অর্ডার দিতে চাই।");
             if (name) lines.push(`নাম: ${name}`);
             if (partySize) lines.push(`দলের সংখ্যা: ${partySize} জন`);
-            if (dateTime) lines.push(`পছন্দের সময়: ${dateTime}`);
+            if (dateTime) lines.push(`পছন্দের সময়: ${formatDateTime(dateTime)}`);
             if (cartItems.length) {
                 lines.push("অর্ডার:");
                 cartItems.forEach((i) => lines.push(`  • ${i.nameBn} × ${i.qty} = ৳${i.price * i.qty}`));
@@ -97,7 +116,7 @@ export default function ReserveForm({ locale, whatsapp, menuItems }: Props) {
             lines.push("🙏 Hello Kalai Ghor! I'd like to pre-order.");
             if (name) lines.push(`Name: ${name}`);
             if (partySize) lines.push(`Party size: ${partySize}`);
-            if (dateTime) lines.push(`Preferred time: ${dateTime}`);
+            if (dateTime) lines.push(`Preferred time: ${formatDateTime(dateTime)}`);
             if (cartItems.length) {
                 lines.push("Order:");
                 cartItems.forEach((i) => lines.push(`  • ${i.nameEn} × ${i.qty} = ৳${i.price * i.qty}`));
@@ -289,15 +308,8 @@ export default function ReserveForm({ locale, whatsapp, menuItems }: Props) {
 
             {/* ── Date & time ── */}
             <div>
-                <label htmlFor="reserve-datetime" className={label}>{t("dateLabel")}</label>
-                <input
-                    id="reserve-datetime"
-                    type="datetime-local"
-                    value={dateTime}
-                    onChange={(e) => setDateTime(e.target.value)}
-                    className={inp}
-                    style={{ colorScheme: "light" }}
-                />
+                <span className={label}>{t("dateLabel")}</span>
+                <DateTimePicker value={dateTime} onChange={setDateTime} locale={locale} />
             </div>
 
             {/* ── Notes ── */}
