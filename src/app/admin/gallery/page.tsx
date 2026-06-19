@@ -178,6 +178,7 @@ export default function GalleryAdminPage() {
                                         className="border-2 border-dashed border-neutral-300 rounded-lg p-4 text-center cursor-pointer hover:border-neutral-400 transition-colors"
                                     >
                                         {addPreview ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
                                             <img src={addPreview} alt="preview" className="mx-auto max-h-40 object-contain rounded" />
                                         ) : (
                                             <div className="flex flex-col items-center gap-2 py-4 text-neutral-400">
