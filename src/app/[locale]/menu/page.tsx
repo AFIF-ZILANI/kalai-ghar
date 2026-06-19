@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/utils";
 import type { MenuItem } from "@content/site-config";
 import Link from "next/link";
 import { OG_IMAGE, pageAlternates, buildOg } from "@/lib/seo";
+import { toWaNumber } from "@/lib/whatsapp";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
@@ -160,7 +161,7 @@ export default async function MenuPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                     <a
-                        href={`https://wa.me/${contact.whatsapp}?text=${whatsappMsg}`}
+                        href={`https://wa.me/${toWaNumber(contact.whatsapp)}?text=${whatsappMsg}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fb856] text-white font-semibold px-6 py-4 sm:py-3 transition-colors text-sm tracking-wide"

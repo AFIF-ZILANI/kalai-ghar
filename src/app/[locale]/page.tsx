@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Phone, MessageCircle, MapPin, Clock, ArrowRight, Star } from "lucide-react";
 import { siteConfig, menuItems } from "@content/site-config";
 import { getContactData } from "@/lib/server/contact";
+import { toWaNumber } from "@/lib/whatsapp";
 import { formatPrice } from "@/lib/utils";
 import fs from "fs";
 import path from "path";
@@ -85,7 +86,7 @@ export default async function HomePage() {
                             acceptsReservations: false,
                             potentialAction: {
                                 "@type": "OrderAction",
-                                target: `https://wa.me/${contact.whatsapp}`,
+                                target: `https://wa.me/${toWaNumber(contact.whatsapp)}`,
                             },
                         },
                         {
@@ -146,7 +147,7 @@ export default async function HomePage() {
 
                     <div className="mt-9 flex flex-col sm:flex-row gap-3 items-start">
                         <a
-                            href={`https://wa.me/${contact.whatsapp}?text=${whatsappMsg}`}
+                            href={`https://wa.me/${toWaNumber(contact.whatsapp)}?text=${whatsappMsg}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2.5 bg-[var(--color-terracotta-600)] hover:bg-[var(--color-terracotta-500)] text-white font-semibold px-7 py-3.5 transition-colors text-sm tracking-wide"

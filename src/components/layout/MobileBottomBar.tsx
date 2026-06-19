@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Phone, MessageCircle, MapPin } from "lucide-react";
+import { toWaNumber } from "@/lib/whatsapp";
 
 type Props = { phone: string; whatsapp: string; mapsUrl: string };
 
@@ -21,7 +22,7 @@ export default function MobileBottomBar({ phone, whatsapp, mapsUrl }: Props) {
                     <span className="text-[11px] font-medium">{t("call")}</span>
                 </a>
                 <a
-                    href={`https://wa.me/${whatsapp}?text=${whatsappMsg}`}
+                    href={`https://wa.me/${toWaNumber(whatsapp)}?text=${whatsappMsg}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-col items-center justify-center gap-1 py-3 bg-[var(--color-terracotta-600)] text-white hover:bg-[var(--color-terracotta-500)] transition-colors"
