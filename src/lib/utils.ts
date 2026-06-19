@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
+
 /** Convert Western Arabic numerals to Eastern Arabic (Bengali) numerals */
 export function toBengaliNumerals(n: number | string): string {
     const map: Record<string, string> = {

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "react-day-picker/dist/style.css";
 
 @theme inline {
     /* Heritage terracotta palette */
@@ -36,6 +37,19 @@
     --font-display: var(--font-playfair);
     --font-bengali: var(--font-hind-siliguri);
 }
+
+/* Reset react-day-picker base styles — we fully control via Tailwind classNames */
+.rdp {
+    --rdp-accent-color: var(--color-terracotta-500);
+    --rdp-background-color: var(--color-earth-100);
+    margin: 0;
+}
+.rdp-months { width: 100%; }
+.rdp-month { width: 100%; }
+.rdp-table { width: 100%; max-width: none; }
+.rdp-head_cell,
+.rdp-cell { text-align: center; }
+.rdp-day { margin: 0 auto; }
 
 html {
     scroll-behavior: smooth;
