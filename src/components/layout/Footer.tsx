@@ -35,7 +35,7 @@ export default function Footer({ phone, whatsapp, address }: Props) {
                             <p className="font-display text-2xl font-semibold text-white tracking-tight mb-2">
                                 {locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}
                             </p>
-                            <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-saffron-400)] mb-4">
+                            <p className="text-[10px] uppercase tracking-[0.2em] text-(--color-saffron-400) mb-4">
                                 {locale === "bn" ? "রাজশাহী, বাংলাদেশ" : "Rajshahi, Bangladesh"}
                             </p>
                             <p className="text-sm text-white/45 leading-relaxed">{t("tagline")}</p>
@@ -67,7 +67,7 @@ export default function Footer({ phone, whatsapp, address }: Props) {
                             </p>
                             <ul className="space-y-3.5 text-[13px]">
                                 <li className="flex items-start gap-2.5">
-                                    <MapPin size={14} className="mt-0.5 shrink-0 text-[var(--color-terracotta-400)]" />
+                                    <MapPin size={14} className="mt-0.5 shrink-0 text-(--color-terracotta-400)" />
                                     <span className="text-white/50">
                                         {address.area}, {address.city}
                                     </span>
@@ -77,7 +77,7 @@ export default function Footer({ phone, whatsapp, address }: Props) {
                                         href={`tel:${phone}`}
                                         className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"
                                     >
-                                        <Phone size={14} className="text-[var(--color-terracotta-400)]" />
+                                        <Phone size={14} className="text-(--color-terracotta-400)" />
                                         {phone === "TODO_PHONE_NUMBER" ? "—" : phone}
                                     </a>
                                 </li>
@@ -88,7 +88,7 @@ export default function Footer({ phone, whatsapp, address }: Props) {
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"
                                     >
-                                        <MessageCircle size={14} className="text-[var(--color-terracotta-400)]" />
+                                        <MessageCircle size={14} className="text-(--color-terracotta-400)" />
                                         WhatsApp
                                     </a>
                                 </li>
