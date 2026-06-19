@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { Phone, MapPin, MessageCircle } from "lucide-react";
+import { toWaNumber } from "@/lib/whatsapp";
 import { siteConfig } from "@content/site-config";
 
 type Props = {
@@ -83,7 +84,7 @@ export default function Footer({ phone, whatsapp, address }: Props) {
                                 </li>
                                 <li>
                                     <a
-                                        href={`https://wa.me/${whatsapp}`}
+                                        href={`https://wa.me/${toWaNumber(whatsapp)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2.5 text-white/50 hover:text-white transition-colors"

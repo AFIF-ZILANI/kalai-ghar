@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { MessageCircle } from "lucide-react";
+import { toWaNumber } from "@/lib/whatsapp";
 
 type Props = {
     locale: string;
@@ -36,7 +37,7 @@ export default function ReserveForm({ locale, whatsapp }: Props) {
             if (notes) lines.push(`Special requests: ${notes}`);
         }
         const msg = encodeURIComponent(lines.join("\n"));
-        return `https://wa.me/${whatsapp}?text=${msg}`;
+        return `https://wa.me/${toWaNumber(whatsapp)}?text=${msg}`;
     }
 
     const inputClass =
