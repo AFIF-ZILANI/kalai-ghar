@@ -1,0 +1,187 @@
+{
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/.claude/settings.local.json": {
+    "mtime": 1781314929.0588176,
+    "ast_hash": "28628b4fa1b836a8d8c597d947f1d9b7",
+    "semantic_hash": "28628b4fa1b836a8d8c597d947f1d9b7"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/content/site-config.ts": {
+    "mtime": 1781314929.186168,
+    "ast_hash": "427fedf96139100f3f8e5a89083e71f8",
+    "semantic_hash": "427fedf96139100f3f8e5a89083e71f8"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/eslint.config.mjs": {
+    "mtime": 1781314929.1964595,
+    "ast_hash": "e1c2aa3038406819cbf5d40dd11ffc27",
+    "semantic_hash": "e1c2aa3038406819cbf5d40dd11ffc27"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/i18n/request.ts": {
+    "mtime": 1781314929.2094269,
+    "ast_hash": "d9bd460d200a3d47b4b1f80fcf0124a8",
+    "semantic_hash": "d9bd460d200a3d47b4b1f80fcf0124a8"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/i18n/routing.ts": {
+    "mtime": 1781314929.2136297,
+    "ast_hash": "81113f42484cac3778a3d7359c44f6e7",
+    "semantic_hash": "81113f42484cac3778a3d7359c44f6e7"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/messages/bn.json": {
+    "mtime": 1781314929.2255087,
+    "ast_hash": "0b7e2ec8012da27017223d960b49c9f1",
+    "semantic_hash": "0b7e2ec8012da27017223d960b49c9f1"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/messages/en.json": {
+    "mtime": 1781314929.232505,
+    "ast_hash": "ccec3a21ab2e9d4402a89c370e0598d9",
+    "semantic_hash": "ccec3a21ab2e9d4402a89c370e0598d9"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/next.config.ts": {
+    "mtime": 1781314929.2373815,
+    "ast_hash": "0fbe61990fbbf726493977e9482a66f5",
+    "semantic_hash": "0fbe61990fbbf726493977e9482a66f5"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/package.json": {
+    "mtime": 1781314929.2461584,
+    "ast_hash": "d4a6366a4d1cfe09c005409e00fec458",
+    "semantic_hash": "d4a6366a4d1cfe09c005409e00fec458"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/postcss.config.mjs": {
+    "mtime": 1781314929.2501433,
+    "ast_hash": "50067c8dbadad958146e64e500ba22e3",
+    "semantic_hash": "50067c8dbadad958146e64e500ba22e3"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/gallery/page.tsx": {
+    "mtime": 1781314929.294408,
+    "ast_hash": "d9600106ba5cf148965867dba0fa81ea",
+    "semantic_hash": "d9600106ba5cf148965867dba0fa81ea"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/layout.tsx": {
+    "mtime": 1781314929.3082182,
+    "ast_hash": "4649d73c7aaad83c0bb409327effa78e",
+    "semantic_hash": "4649d73c7aaad83c0bb409327effa78e"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/menu/page.tsx": {
+    "mtime": 1781314929.3300977,
+    "ast_hash": "d8df96b4b62a27275dde2a9d576fb4bc",
+    "semantic_hash": "d8df96b4b62a27275dde2a9d576fb4bc"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/page.tsx": {
+    "mtime": 1781314929.3528125,
+    "ast_hash": "7a511b403f0486a735ef727b730bd9af",
+    "semantic_hash": "7a511b403f0486a735ef727b730bd9af"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/reserve/ReserveForm.tsx": {
+    "mtime": 1781314929.3780754,
+    "ast_hash": "89c8d8b1d80bb0ad968e58cd064d6d0e",
+    "semantic_hash": "89c8d8b1d80bb0ad968e58cd064d6d0e"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/reserve/page.tsx": {
+    "mtime": 1781314929.3618953,
+    "ast_hash": "54861be06153e2464256f06b2b409f01",
+    "semantic_hash": "54861be06153e2464256f06b2b409f01"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/story/page.tsx": {
+    "mtime": 1781314929.389359,
+    "ast_hash": "69fa127261258fe8e31407a3178c1a4e",
+    "semantic_hash": "69fa127261258fe8e31407a3178c1a4e"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/[locale]/visit/page.tsx": {
+    "mtime": 1781314929.4080126,
+    "ast_hash": "d91f96447531a13673096894fabf5a32",
+    "semantic_hash": "d91f96447531a13673096894fabf5a32"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/layout.tsx": {
+    "mtime": 1781314929.4400382,
+    "ast_hash": "5c6e09ad495ae36174465494ee41044c",
+    "semantic_hash": "5c6e09ad495ae36174465494ee41044c"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/page.tsx": {
+    "mtime": 1781314929.4426153,
+    "ast_hash": "aa4cb9d16d5d7f44d030eec24e32f84b",
+    "semantic_hash": "aa4cb9d16d5d7f44d030eec24e32f84b"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/robots.ts": {
+    "mtime": 1781314929.4458644,
+    "ast_hash": "2768066292d275592a9a590acba6afbc",
+    "semantic_hash": "2768066292d275592a9a590acba6afbc"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/app/sitemap.ts": {
+    "mtime": 1781314929.449924,
+    "ast_hash": "13a76226b4eb932c03b6d348a8f6840c",
+    "semantic_hash": "13a76226b4eb932c03b6d348a8f6840c"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/components/layout/Footer.tsx": {
+    "mtime": 1781314929.4602697,
+    "ast_hash": "36a0102d7165bd6c538852019b56d07b",
+    "semantic_hash": "36a0102d7165bd6c538852019b56d07b"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/components/layout/Header.tsx": {
+    "mtime": 1781314929.4702072,
+    "ast_hash": "8ed98950f2162cf7340a39dc23c212cb",
+    "semantic_hash": "8ed98950f2162cf7340a39dc23c212cb"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/components/layout/MobileBottomBar.tsx": {
+    "mtime": 1781314929.475142,
+    "ast_hash": "767fdb025a51320566db69a30f56658b",
+    "semantic_hash": "767fdb025a51320566db69a30f56658b"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/lib/utils.ts": {
+    "mtime": 1781314929.479679,
+    "ast_hash": "c618c5ad0e8ac7e188393f8458b35b24",
+    "semantic_hash": "c618c5ad0e8ac7e188393f8458b35b24"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/src/proxy.ts": {
+    "mtime": 1781314929.4835732,
+    "ast_hash": "73218f6475fb30479d319afb0084fd85",
+    "semantic_hash": "73218f6475fb30479d319afb0084fd85"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/tsconfig.json": {
+    "mtime": 1781314929.4865909,
+    "ast_hash": "a685369adc6d30cda1424ad945209756",
+    "semantic_hash": "a685369adc6d30cda1424ad945209756"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/.prettierrc.yaml": {
+    "mtime": 1781314929.0861695,
+    "ast_hash": "fae1fecf316eb5071f875e357c3b3f82",
+    "semantic_hash": "fae1fecf316eb5071f875e357c3b3f82"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/AGENTS.md": {
+    "mtime": 1781314929.116013,
+    "ast_hash": "54dbd7961dd669c830dfaa4d1884abd0",
+    "semantic_hash": "54dbd7961dd669c830dfaa4d1884abd0"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/CLAUDE.md": {
+    "mtime": 1781280627.5320697,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/README.md": {
+    "mtime": 1781314929.269301,
+    "ast_hash": "8ae67ddf74a09677d1e37c60856133c1",
+    "semantic_hash": "8ae67ddf74a09677d1e37c60856133c1"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/public/file.svg": {
+    "mtime": 1781280597.517486,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/public/globe.svg": {
+    "mtime": 1781280597.5186112,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/public/next.svg": {
+    "mtime": 1781280597.5186613,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/public/vercel.svg": {
+    "mtime": 1781280597.5187166,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "/Users/afifzilani/code/zerod-agency/projects/kalai-ghor/public/window.svg": {
+    "mtime": 1781280597.5187123,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": "a2760511c65806022ad20adf74370ff3"
+  }
+}
