@@ -1,75 +1,97 @@
-import { getTranslations, getLocale } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { siteConfig } from "@content/site-config";
 import { readGallery } from "@/lib/server/gallery";
+import GalleryGrid from "@/components/gallery/GalleryGrid";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
-    const t = await getTranslations("gallery");
+    const isBn = locale === "bn";
+
+    const title = isBn
+        ? `গ্যালারি — কালাই ঘর রাজশাহী`
+        : `Gallery — Kalai Ghor Rajshahi`;
+    const description = isBn
+        ? `কালাই ঘরের তাওয়া, রান্নাঘর, খাবার ও পরিবেশের আসল ছবি। রাজশাহীর ঐতিহ্যবাহী কালাই রুটির দৃশ্য।`
+        : `Authentic photos of Kalai Ghor's kitchen, food, and ambience. The legendary kalai ruti of Rajshahi captured in pictures.`;
+
     return {
         metadataBase: new URL(siteConfig.siteUrl),
-        title: `${t("title")} — ${locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}`,
-        description: t("subtitle"),
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            url: `${siteConfig.siteUrl}/${locale}/gallery`,
+            siteName: siteConfig.name,
+            images: [{ url: "/images/gallery/Image%20from%20Google%202000x1128.jpg", width: 2000, height: 1128 }],
+            locale: isBn ? "bn_BD" : "en_US",
+            type: "website",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: ["/images/gallery/Image%20from%20Google%202000x1128.jpg"],
+        },
     };
 }
 
-const ASPECT_DIMS = {
-    landscape: { w: 800, h: 534 },
-    square: { w: 800, h: 800 },
-    portrait: { w: 640, h: 853 },
-};
-
 export default async function GalleryPage() {
     const locale = await getLocale();
-    const t = await getTranslations("gallery");
+    const isBn = locale === "bn";
     const galleryImages = readGallery();
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "ImageGallery",
+        name: isBn ? "কালাই ঘর গ্যালারি" : "Kalai Ghor Gallery",
+        description: isBn
+            ? "রাজশাহীর কালাই ঘরের খাবার, রান্নাঘর ও পরিবেশের ছবি"
+            : "Photos of food, kitchen, and ambience at Kalai Ghor, Rajshahi",
+        url: `${siteConfig.siteUrl}/${locale}/gallery`,
+        author: {
+            "@type": "Restaurant",
+            name: siteConfig.name,
+            address: {
+                "@type": "PostalAddress",
+                addressLocality: "Rajshahi",
+                addressCountry: "BD",
+            },
+        },
+        image: galleryImages.map((img) => ({
+            "@type": "ImageObject",
+            contentUrl: img.src.startsWith("http") ? img.src : `${siteConfig.siteUrl}${img.src}`,
+            name: isBn ? img.captionBn : img.captionEn,
+            description: isBn ? img.altBn : img.altEn,
+        })),
+    };
+
     return (
-        <div className="pb-10 sm:pb-20">
-            {/* Page header */}
-            <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 pt-12 sm:pt-20 pb-8 sm:pb-12">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-terracotta-500)] mb-3">
-                    {locale === "bn" ? "ফটোগ্যালারি" : "Photography"}
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+
+            {/* ── Page header ── */}
+            <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 pt-14 sm:pt-20 pb-10 sm:pb-14">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--color-terracotta-500)] mb-3">
+                    {isBn ? "ফটোগ্যালারি" : "Photography"}
                 </p>
-                <h1 className="font-display text-3xl sm:text-5xl font-semibold text-[var(--color-ink)] leading-tight">
-                    {t("title")}
+                <h1 className="font-display text-4xl sm:text-6xl font-semibold text-[var(--color-ink)] leading-tight">
+                    {isBn ? "কালাই ঘরের দৃশ্য" : "Kalai Ghor in Pictures"}
                 </h1>
-                <p className="mt-3 text-sm text-[var(--color-ink)]/50">{t("subtitle")}</p>
+                <p className="mt-4 text-base text-[var(--color-ink)]/50 max-w-xl leading-relaxed">
+                    {isBn
+                        ? "তাওয়ার আগুন থেকে খাবার টেবিল পর্যন্ত — রাজশাহীর ঐতিহ্যবাহী কালাই রুটির প্রতিটি মুহূর্ত।"
+                        : "From the fire of the tawa to the dining table — every moment of Rajshahi's legendary kalai ruti tradition."}
+                </p>
+                <div className="mt-6 w-12 h-px bg-[var(--color-terracotta-400)]" />
             </div>
 
-            {galleryImages.length > 0 ? (
-                <div className="columns-2 sm:columns-3 gap-px bg-[var(--color-earth-100)]">
-                    {galleryImages.map((img, idx) => {
-                        const dims = ASPECT_DIMS[img.aspect];
-                        return (
-                            <figure key={img.id} className="break-inside-avoid overflow-hidden mb-px">
-                                <div className="overflow-hidden bg-[var(--color-earth-50)]">
-                                    <Image
-                                        src={img.src}
-                                        alt={locale === "bn" ? img.altBn : img.altEn}
-                                        width={dims.w}
-                                        height={dims.h}
-                                        className="w-full h-auto object-cover hover:scale-[1.03] transition-transform duration-700"
-                                        loading={idx < 4 ? "eager" : "lazy"}
-                                        sizes="(min-width: 640px) 33vw, 50vw"
-                                        unoptimized={img.src.startsWith("http")}
-                                    />
-                                </div>
-                                <figcaption className="px-3 py-2 text-[11px] text-[var(--color-ink)]/40 bg-[var(--color-cream)] leading-tight">
-                                    {locale === "bn" ? img.captionBn : img.captionEn}
-                                </figcaption>
-                            </figure>
-                        );
-                    })}
-                </div>
-            ) : (
-                <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12">
-                    <p className="text-sm text-[var(--color-ink)]/40 italic">
-                        {locale === "bn" ? "শীঘ্রই ছবি আসছে।" : "Photos coming soon."}
-                    </p>
-                </div>
-            )}
-        </div>
+            {/* ── Gallery grid (client component for filters + lightbox) ── */}
+            <GalleryGrid items={galleryImages} locale={locale} />
+        </>
     );
 }
