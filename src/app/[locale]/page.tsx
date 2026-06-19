@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, MessageCircle, MapPin, Clock, ArrowRight, Star } from "lucide-react";
 import { siteConfig, menuItems } from "@content/site-config";
+import { getContactData } from "@/lib/server/contact";
 import { formatPrice } from "@/lib/utils";
 import fs from "fs";
 import path from "path";
@@ -35,6 +36,7 @@ export default async function HomePage() {
     const locale = await getLocale();
     const t = await getTranslations();
 
+    const contact = getContactData();
     const featuredItems = menuItems.filter((item) => item.featured);
     const notables = readNotables();
 
@@ -57,7 +59,7 @@ export default async function HomePage() {
                         alternateName: siteConfig.nameBn,
                         description: locale === "bn" ? siteConfig.taglineBn : siteConfig.tagline,
                         url: `${siteConfig.siteUrl}/${locale}`,
-                        telephone: siteConfig.phone,
+                        telephone: contact.phone,
                         address: {
                             "@type": "PostalAddress",
                             streetAddress: siteConfig.address.street,
@@ -122,7 +124,7 @@ export default async function HomePage() {
 
                     <div className="mt-9 flex flex-col sm:flex-row gap-3 items-start">
                         <a
-                            href={`https://wa.me/${siteConfig.whatsapp}?text=${whatsappMsg}`}
+                            href={`https://wa.me/${contact.whatsapp}?text=${whatsappMsg}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2.5 bg-[var(--color-terracotta-600)] hover:bg-[var(--color-terracotta-500)] text-white font-semibold px-7 py-3.5 transition-colors text-sm tracking-wide"
@@ -131,14 +133,14 @@ export default async function HomePage() {
                             {t("hero.ctaWhatsApp")}
                         </a>
                         <a
-                            href={`tel:${siteConfig.phone}`}
+                            href={`tel:${contact.phone}`}
                             className="inline-flex items-center gap-2.5 border border-white/30 hover:border-white/60 text-white font-medium px-7 py-3.5 transition-colors text-sm tracking-wide"
                         >
                             <Phone size={17} strokeWidth={2} />
                             {t("hero.ctaCall")}
                         </a>
                         <a
-                            href={siteConfig.googleMapsDirectionsUrl}
+                            href={contact.googleMapsDirectionsUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2.5 border border-white/30 hover:border-white/60 text-white font-medium px-7 py-3.5 transition-colors text-sm tracking-wide"
