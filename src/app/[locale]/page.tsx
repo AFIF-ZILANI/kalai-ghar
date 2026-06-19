@@ -283,7 +283,7 @@ export default async function HomePage() {
                 <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-28 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <div>
                         <p className="text-[var(--color-saffron-400)] text-xs font-semibold uppercase tracking-[0.2em] mb-5">
-                            {locale === "bn" ? "উত্তরবঙ্গ · রাজশাহী" : "North Bengal · Rajshahi"}
+                            {locale === "bn" ? "চাঁপাইনবাবগঞ্জ · রাজশাহী" : "Chapainawabganj · Rajshahi"}
                         </p>
                         <h2
                             id="heritage-heading"

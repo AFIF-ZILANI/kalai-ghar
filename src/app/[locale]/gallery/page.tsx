@@ -13,8 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
         ? `গ্যালারি — কালাই ঘর রাজশাহী`
         : `Gallery — Kalai Ghor Rajshahi`;
     const description = isBn
-        ? `কালাই ঘরের তাওয়া, রান্নাঘর, খাবার ও পরিবেশের আসল ছবি। রাজশাহীর ঐতিহ্যবাহী কালাই রুটির দৃশ্য।`
-        : `Authentic photos of Kalai Ghor's kitchen, food, and ambience. The legendary kalai ruti of Rajshahi captured in pictures.`;
+        ? `কালাই ঘরের তাওয়া, রান্নাঘর, খাবার ও পরিবেশের আসল ছবি। চাঁপাইনবাবগঞ্জের ঐতিহ্যবাহী কালাই রুটির দৃশ্য।`
+        : `Authentic photos of Kalai Ghor's kitchen, food, and ambience. The legendary kalai ruti from Chapainawabganj, captured in pictures.`;
 
     return {
         metadataBase: new URL(siteConfig.siteUrl),
@@ -49,8 +49,8 @@ export default async function GalleryPage() {
         "@type": "ImageGallery",
         name: isBn ? "কালাই ঘর গ্যালারি" : "Kalai Ghor Gallery",
         description: isBn
-            ? "রাজশাহীর কালাই ঘরের খাবার, রান্নাঘর ও পরিবেশের ছবি"
-            : "Photos of food, kitchen, and ambience at Kalai Ghor, Rajshahi",
+            ? "চাঁপাইনবাবগঞ্জের কালাই রুটি — রাজশাহীর কালাই ঘরের খাবার, রান্নাঘর ও পরিবেশের ছবি"
+            : "Chapainawabganj's kalai ruti — food, kitchen, and ambience at Kalai Ghor in Rajshahi",
         url: `${siteConfig.siteUrl}/${locale}/gallery`,
         author: {
             "@type": "Restaurant",
