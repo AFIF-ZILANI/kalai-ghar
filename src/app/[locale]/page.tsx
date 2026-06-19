@@ -48,32 +48,54 @@ export default async function HomePage() {
 
     return (
         <>
-            {/* JSON-LD Restaurant Schema */}
+            {/* JSON-LD — Restaurant + WebSite */}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "Restaurant",
-                        name: siteConfig.name,
-                        alternateName: siteConfig.nameBn,
-                        description: locale === "bn" ? siteConfig.taglineBn : siteConfig.tagline,
-                        url: `${siteConfig.siteUrl}/${locale}`,
-                        telephone: contact.phone,
-                        address: {
-                            "@type": "PostalAddress",
-                            streetAddress: siteConfig.address.street,
-                            addressLocality: siteConfig.address.city,
-                            addressCountry: "BD",
+                    __html: JSON.stringify([
+                        {
+                            "@context": "https://schema.org",
+                            "@type": "Restaurant",
+                            name: siteConfig.name,
+                            alternateName: siteConfig.nameBn,
+                            description: locale === "bn" ? siteConfig.taglineBn : siteConfig.tagline,
+                            url: `${siteConfig.siteUrl}/${locale}`,
+                            telephone: contact.phone,
+                            priceRange: siteConfig.priceRange,
+                            servesCuisine: siteConfig.cuisine,
+                            image: `${siteConfig.siteUrl}/og-image.jpg`,
+                            logo: { "@type": "ImageObject", url: `${siteConfig.siteUrl}/logo.png` },
+                            address: {
+                                "@type": "PostalAddress",
+                                streetAddress: contact.address.street,
+                                addressLocality: contact.address.city,
+                                addressCountry: "BD",
+                            },
+                            geo: {
+                                "@type": "GeoCoordinates",
+                                latitude: contact.geo.lat,
+                                longitude: contact.geo.lng,
+                            },
+                            hasMap: contact.googleMapsDirectionsUrl,
+                            openingHoursSpecification: [
+                                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "22:00" },
+                                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday","Sunday"], opens: "07:00", closes: "23:00" },
+                            ],
+                            menu: `${siteConfig.siteUrl}/${locale}/menu`,
+                            acceptsReservations: false,
+                            potentialAction: {
+                                "@type": "OrderAction",
+                                target: `https://wa.me/${contact.whatsapp}`,
+                            },
                         },
-                        geo: {
-                            "@type": "GeoCoordinates",
-                            latitude: siteConfig.geo.lat,
-                            longitude: siteConfig.geo.lng,
+                        {
+                            "@context": "https://schema.org",
+                            "@type": "WebSite",
+                            name: siteConfig.name,
+                            url: siteConfig.siteUrl,
+                            inLanguage: [{ "@type": "Language", name: "Bengali" }, { "@type": "Language", name: "English" }],
                         },
-                        servesCuisine: siteConfig.cuisine,
-                        priceRange: siteConfig.priceRange,
-                    }),
+                    ]),
                 }}
             />
 

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@content/site-config";
 import { readGallery } from "@/lib/server/gallery";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { OG_IMAGE, pageAlternates } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
@@ -19,12 +20,13 @@ export async function generateMetadata(): Promise<Metadata> {
         metadataBase: new URL(siteConfig.siteUrl),
         title,
         description,
+        alternates: pageAlternates(locale, "/gallery"),
         openGraph: {
             title,
             description,
             url: `${siteConfig.siteUrl}/${locale}/gallery`,
             siteName: siteConfig.name,
-            images: [{ url: "/images/gallery/Image%20from%20Google%202000x1128.jpg", width: 2000, height: 1128 }],
+            images: [OG_IMAGE],
             locale: isBn ? "bn_BD" : "en_US",
             type: "website",
         },
@@ -32,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
             card: "summary_large_image",
             title,
             description,
-            images: ["/images/gallery/Image%20from%20Google%202000x1128.jpg"],
+            images: [OG_IMAGE.url],
         },
     };
 }

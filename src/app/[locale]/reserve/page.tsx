@@ -2,15 +2,24 @@ import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { siteConfig } from "@content/site-config";
 import { getContactData } from "@/lib/server/contact";
+import { OG_IMAGE, pageAlternates, buildOg } from "@/lib/seo";
 import ReserveForm from "./ReserveForm";
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getLocale();
+    const isBn = locale === "bn";
     const t = await getTranslations("reserve");
+    const title = `${t("title")} — ${isBn ? "কালাই ঘর" : "Kalai Ghor"}`;
+    const description = isBn
+        ? "কালাই ঘরে আগাম অর্ডার করুন — নাম, দলের সংখ্যা ও পছন্দের পদ লিখুন, হোয়াটসঅ্যাপে নিশ্চিত করুন।"
+        : "Pre-order at Kalai Ghor — fill in your name, party size, and preference. We'll confirm via WhatsApp.";
     return {
         metadataBase: new URL(siteConfig.siteUrl),
-        title: `${t("title")} — ${locale === "bn" ? "কালাই ঘর" : "Kalai Ghor"}`,
-        description: t("subtitle"),
+        title,
+        description,
+        alternates: pageAlternates(locale, "/reserve"),
+        openGraph: buildOg({ locale, title, description, path: "/reserve", image: OG_IMAGE }),
+        twitter: { card: "summary_large_image", title, description, images: [OG_IMAGE.url] },
     };
 }
 
